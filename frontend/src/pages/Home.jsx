@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api";
-
+import Dropzone from "../components/Dropzone";
 
 function Home() {
   useEffect(() => {}, []);
@@ -8,6 +8,8 @@ function Home() {
   return (
     <div>
       <h1>Hello</h1>
+      {/* <DragDropFile/> */}
+      <Dropzone />
     </div>
   );
 }
