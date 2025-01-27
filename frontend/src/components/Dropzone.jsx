@@ -15,6 +15,7 @@ function Dropzone(props) {
   if (isDragReject) dropzoneClassName += " dropzone-reject";
 
   return (
+    <div className="dropzone-block">
       <div className="dropzone-wrapper" {...getRootProps()}>
         <input {...getInputProps()} />
         <div className="dropzone-content">
@@ -27,6 +28,7 @@ function Dropzone(props) {
           </p>
         </div>
       </div>
+    </div>
   );
 }
 
