@@ -1,0 +1,51 @@
+.messages-block {
+    display: flex;
+    flex-direction: column;
+    float: right;
+}
+
+.message-wrapper {
+    max-width: 300px;
+    min-width: 300px;
+    height: fit-content;
+    padding: 15px;
+    margin: 15px 15px 0px 0px;
+    color: #FEFEFD;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    display: inline-flexbox;
+    float: right;
+}
+
+.message-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-wrapper p {
+    max-width: 280px;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+.error {
+    background-color: #D32F2F;
+}
+
+.success {
+    background-color: #2E7D32;
+}
+
+.warning {
+    background-color: #EF6C00;
+}
+
+.neutral {
+    background-color: #0288D1;
+}
+
+.message-block .icon {
+    font-size: 16px;
+    margin-right: 10px;
+}
