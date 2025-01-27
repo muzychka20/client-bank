@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
@@ -11,6 +11,14 @@ function AuthForm({ route, method }) {
   const navigate = useNavigate();
 
   const name = method === "login" ? "Login" : "Register";
+
+  // Check if the user is already logged in
+  useEffect(() => {
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     setLoading(true);
