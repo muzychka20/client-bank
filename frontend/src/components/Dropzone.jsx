@@ -1,6 +1,6 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import "../styles/dropzone.css";
+import "../styles/Dropzone.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileImage } from "@fortawesome/free-solid-svg-icons";
 

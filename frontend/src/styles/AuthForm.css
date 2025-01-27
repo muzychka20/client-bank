@@ -1,0 +1,87 @@
+.form-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    border-radius: 20px;
+    -webkit-box-shadow: 10px 0px 80px -33px rgba(254, 129, 59, 1);
+    -moz-box-shadow: 10px 0px 80px -33px rgba(254, 129, 59, 1);
+    box-shadow: 10px 0px 80px -33px rgba(254, 129, 59, 1);
+
+    /* For Loadig Indicator Circle */
+    min-height: 600px;
+}
+
+.form-image {
+    width: 300px;
+    flex: 1;
+    border-radius: 20px;
+}
+
+.form-image img {
+    height: 100%;
+    border-radius: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 100px 50px;
+    background-color: #FEFEFD;
+    border-radius: 20px;
+
+}
+
+.form-input {
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    height: 20px;
+    width: 250px;
+    border: #E1DFD6 1px solid;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-button {
+    padding: 14px;
+    color: #FEFEFD;
+    font-size: 17px;
+    border: none;
+    border-radius: 10px;
+    background: rgb(251, 102, 47);
+    background: -moz-linear-gradient(180deg, rgba(251, 102, 47, 1) 0%, rgba(255, 132, 60, 1) 51%, rgba(251, 102, 47, 1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(251, 102, 47, 1) 0%, rgba(255, 132, 60, 1) 51%, rgba(251, 102, 47, 1) 100%);
+    background: linear-gradient(180deg, rgba(251, 102, 47, 1) 0%, rgba(255, 132, 60, 1) 51%, rgba(251, 102, 47, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fb662f", endColorstr="#fb662f", GradientType=1);
+    font-weight: 600;
+}
+
+.form-button:hover {
+    cursor: pointer;
+}
+
+.form-title {
+    text-align: center;
+}
+
+.form-loading {
+    margin: 0 auto;
+}
+
+.form-sign-up {
+    text-align: center;
+    font-size: 14px;
+}
+
+.form-sign-up a {
+    color: black;
+}
