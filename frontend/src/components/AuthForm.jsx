@@ -65,8 +65,9 @@ function AuthForm({ route, method }) {
         <h1 className="form-title">{name}</h1>
         <div className="input-block">
           <label htmlFor="username">Login</label>
-          <div class="input-icons">
-            <i class="fa fa-user">|</i>
+          <div className="input-icons">
+            <i className="fa fa-user"></i>
+            <i className="fa fa-grip-lines-vertical"></i>
             <input
               type="text"
               className="form-input"
@@ -80,8 +81,9 @@ function AuthForm({ route, method }) {
         </div>
         <div className="input-block">
           <label htmlFor="password">Password</label>
-          <div class="input-icons">
-          <i class="fa fa-key">|</i>
+          <div className="input-icons">
+          <i className="fa fa-key"></i>          
+          <i className="fa fa-grip-lines-vertical"></i>
           <input
             type="password"
             className="form-input"

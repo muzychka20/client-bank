@@ -13,7 +13,7 @@ function Message({ name, message, type }) {
       icon = faCircleExclamation;
       break;
     case "success":
-      icon = faTriangleExclamation;
+      icon = faCircleCheck;
       break;
     case "warning":
       icon = faTriangleExclamation;

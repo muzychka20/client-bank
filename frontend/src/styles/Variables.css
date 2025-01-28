@@ -1,0 +1,18 @@
+:root {
+    /* Main */
+    --main-color: #291103;
+    --white-color: #FEFEFD;
+    --orange-color: rgb(251, 102, 47);
+    --input-color: #8d8c86;
+    --loading-circle-color: #f3f3f3;
+
+    /* Messages colors and accepting coloors of dropzone */
+    --error-color: #D32F2F;
+    --success-color: #2E7D32;
+    --warning-color: #EF6C00;
+    --neutral-color: #0288D1;
+
+    /* Dropzone bg */
+    --dropzone-bg-color: #23AEFF;
+    --dropzone-wrapper-color: #39B1FA;
+}

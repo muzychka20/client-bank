@@ -1,3 +1,5 @@
+@import "./Variables.css";
+
 .messages-block {
     display: flex;
     flex-direction: column;
@@ -9,7 +11,7 @@
 }
 
 .message-wrapper {
-    color: #FEFEFD;
+    color: var(--white-color);
     margin: 15px 0px 0px 0px;
     overflow-wrap: break-word;
     display: flex;
@@ -52,24 +54,24 @@
 
 .message-close .icon {
     font-size: 16px;
-    color: #FEFEFD;
+    color: var(--white-color);
 }
 
 /* types of messages */
 .error {
-    background-color: #D32F2F;
+    background-color: var(--error-color);
 }
 
 .success {
-    background-color: #2E7D32;
+    background-color: var(--success-color);
 }
 
 .warning {
-    background-color: #EF6C00;
+    background-color: var(--warning-color);
 }
 
 .neutral {
-    background-color: #0288D1;
+    background-color: var(--neutral-color);
 }
 
 @keyframes fade {
