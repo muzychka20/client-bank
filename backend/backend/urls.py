@@ -6,8 +6,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/user/register/", CreateUserView.as_view(), name="register"),
-    path("api/user/login/", LoginUserView.as_view(), name="login"),        
-    # path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
-    # path("api-auth/", include("rest_framework.urls")), # for logout
-    # path("api/", include("api.urls")),
+    path("api/user/login/", LoginUserView.as_view(), name="login"),    
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
+    path("api/", include("api.urls")),
 ]
