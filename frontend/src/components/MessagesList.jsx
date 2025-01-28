@@ -9,12 +9,12 @@ function MessagesList() {
   const { messages, removeMessage } = useMessages();
   return (
     <div className="messages-block">
-      {messages.map((message, index) => (
-        <div key={index} className={`message-wrapper`}>
-          {message}
+      {messages.map((message) => (
+        <div key={message.id} className={`message-wrapper`}>
+          {message.component}
           <button
             className="message-close"
-            onClick={() => removeMessage(index)}
+            onClick={() => removeMessage(message.id)}
           >
             <FontAwesomeIcon icon={faClose} className="icon" />
           </button>
