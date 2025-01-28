@@ -49,7 +49,7 @@ function AuthForm({ route, method }) {
       }
     } catch (error) {
       console.log(error);
-      if (error.response && error.response.data.detail.errors) {
+      if (error.response && error.response.data && error.response.data.detail && error.response.data.detail.errors) {        
         error.response.data.detail.errors.forEach((err) => {
           addMessage(
             <Message name={"Invalid data!"} message={err} type={"error"} />

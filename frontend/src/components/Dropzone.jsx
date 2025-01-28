@@ -20,12 +20,8 @@ function Dropzone(props) {
         <input {...getInputProps()} />
         <div className="dropzone-content">
           <FontAwesomeIcon icon={faFileImage} className="icon" />
-          <p className="dropzone-title">
-            DROP FILE HERE
-          </p>
-          <p className="dropzone-desc"> 
-            Drag and drop your .dbf file here.            
-          </p>
+          <p className="dropzone-title">DROP FILE HERE</p>
+          <p className="dropzone-desc">Drag and drop your .dbf file here.</p>
         </div>
       </div>
     </div>
