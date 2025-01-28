@@ -15,8 +15,8 @@
     display: flex;
     align-items: flex-start;
     width: 100%;
-    animation: fade 7s infinite ease;
-    -webkit-animation: fade 7s infinite ease;
+    animation: fade 5s infinite ease;
+    -webkit-animation: fade 5s infinite ease;
 }
 
 .message-content {
@@ -78,6 +78,10 @@
     }
 
     50% {
+        opacity: 100%;
+    }
+
+    75% {
         opacity: 50%;
     }
 

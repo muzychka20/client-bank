@@ -37,12 +37,19 @@ function AuthForm({ route, method }) {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         navigate("/");
+        addMessage(
+          <Message
+            name={"Success!"}
+            message={"You've logged in"}
+            type={"success"}
+          />
+        );
       } else {
         navigate("/login");
       }
     } catch (error) {
       addMessage(
-        <Message name={error.name} message={error.message} type="error" />
+        <Message name={error.name} message={error.message} type={"error"} />
       );
     } finally {
       setLoading(false);
