@@ -48,9 +48,22 @@ function AuthForm({ route, method }) {
         navigate("/login");
       }
     } catch (error) {
-      addMessage(
-        <Message name={error.name} message={error.message} type={"error"} />
-      );
+      console.log(error);
+      if (error.response && error.response.data.detail.errors) {
+        error.response.data.detail.errors.forEach((err) => {
+          addMessage(
+            <Message name={"Invalid data!"} message={err} type={"error"} />
+          );
+        });
+      } else {
+        addMessage(
+          <Message
+            name={"Something went wrong"}
+            message={"Please try again"}
+            type={"error"}
+          />
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -76,23 +89,25 @@ function AuthForm({ route, method }) {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
               autoComplete="on"
+              required
             />
           </div>
         </div>
         <div className="input-block">
           <label htmlFor="password">Password</label>
           <div className="input-icons">
-          <i className="fa fa-key"></i>          
-          <i className="fa fa-grip-lines-vertical"></i>
-          <input
-            type="password"
-            className="form-input"
-            value={password}
-            name="password"
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            autoComplete="on"
-          />
+            <i className="fa fa-key"></i>
+            <i className="fa fa-grip-lines-vertical"></i>
+            <input
+              type="password"
+              className="form-input"
+              value={password}
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              autoComplete="on"
+              required
+            />
           </div>
         </div>
         <button type="submit" className="form-button">
