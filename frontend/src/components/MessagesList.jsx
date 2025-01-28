@@ -15,7 +15,6 @@ function MessagesList() {
           <button
             className="message-close"
             onClick={() => removeMessage(index)}
-            // onClick={console.log(index)}
           >
             <FontAwesomeIcon icon={faClose} className="icon" />
           </button>

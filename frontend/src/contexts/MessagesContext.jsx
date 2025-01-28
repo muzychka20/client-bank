@@ -1,10 +1,27 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Создаем контекст
 const MessagesContext = createContext();
 
 export function MessagesContextProvider({ children }) {
   const [messages, setMessages] = useState([]);
+
+  // Удаление элемента через 7 секунд
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMessages((prev) =>
+        prev
+          .filter((i) => i.timeRemaining > 0)
+          .map((item) => {
+            return {
+              ...item,
+              timeRemaining: item.timeRemaining - 1,
+            };
+          })
+      );
+    }, 7000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Добавление компонента в массив
   const addMessage = (component) => {
@@ -17,9 +34,7 @@ export function MessagesContextProvider({ children }) {
   };
 
   return (
-    <MessagesContext.Provider
-      value={{ messages, addMessage, removeMessage }}
-    >
+    <MessagesContext.Provider value={{ messages, addMessage, removeMessage }}>
       {children}
     </MessagesContext.Provider>
   );
