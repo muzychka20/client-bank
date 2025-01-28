@@ -3,7 +3,6 @@ import {
   faTriangleExclamation,
   faCircleExclamation,
   faCircleCheck,
-  faClose
 } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Message.css";
 
@@ -27,17 +26,12 @@ function Message({ name, message, type }) {
   }
 
   return (
-    <div className={`message-wrapper ${type}`}>
-      <div className="message-row">
-        <h4 className="message-title">
-          <FontAwesomeIcon icon={icon} className="icon" />
-          {name}
-        </h4>
-        <button className="message-close">
-          <FontAwesomeIcon icon={faClose} className="icon" />          
-        </button>
-      </div>
-      <p>{message}</p>
+    <div className={`message-content ${type}`}>
+      <h4 className="message-title">
+        <FontAwesomeIcon icon={icon} className="icon" />
+        {name}
+      </h4>
+      <p className="message-text">{message}</p>
     </div>
   );
 }
