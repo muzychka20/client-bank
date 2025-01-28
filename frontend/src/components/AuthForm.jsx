@@ -65,18 +65,23 @@ function AuthForm({ route, method }) {
         <h1 className="form-title">{name}</h1>
         <div className="input-block">
           <label htmlFor="username">Login</label>
-          <input
-            type="text"
-            className="form-input"
-            value={username}
-            name="username"
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            autoComplete="on"
-          />
+          <div class="input-icons">
+            <i class="fa fa-user">|</i>
+            <input
+              type="text"
+              className="form-input"
+              value={username}
+              name="username"
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              autoComplete="on"
+            />
+          </div>
         </div>
         <div className="input-block">
           <label htmlFor="password">Password</label>
+          <div class="input-icons">
+          <i class="fa fa-key">|</i>
           <input
             type="password"
             className="form-input"
@@ -86,6 +91,7 @@ function AuthForm({ route, method }) {
             placeholder="Password"
             autoComplete="on"
           />
+          </div>
         </div>
         <button type="submit" className="form-button">
           {name}
