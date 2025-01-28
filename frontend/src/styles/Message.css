@@ -1,9 +1,10 @@
 .messages-block {
     display: flex;
     flex-direction: column;
-    float: right;
     z-index: 1;
-    position: relative;
+    position: fixed;
+    right: 0;
+    top: 0;
 }
 
 .message-wrapper {
