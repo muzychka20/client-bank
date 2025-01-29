@@ -63,7 +63,13 @@ function Dropzone(props) {
   const submitFile = async (e) => {
     e.preventDefault();
     if (!file) {
-      alert("Select the file!");
+      addMessage(
+        <Message
+          name={"No file selected!"}
+          message={"Select one .dbf file!"}
+          type={"warning"}
+        />
+      );
       return;
     }
     let formData = new FormData();
