@@ -2,11 +2,11 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 
-class UserSerializer(serializers.Serializer):    
+
+class UserSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
-    
-    
+
     def validate(self, data):
         username = data.get("username")
         password = data.get("password")
@@ -25,16 +25,17 @@ class UserSerializer(serializers.Serializer):
         if not any(char.isdigit() for char in password):
             errors.append("Password must contain at least one numeric digit")
         if not any(char.isupper() for char in password):
-            errors.append("Password must contain at least one uppercase letter")
+            errors.append(
+                "Password must contain at least one uppercase letter")
         if not any(char.islower() for char in password):
-            errors.append("Password must contain at least one lowercase letter")
+            errors.append(
+                "Password must contain at least one lowercase letter")
 
         if errors:
             # Change the error structure here to be consistent with the LoginSerializer
             raise serializers.ValidationError({"detail": {"errors": errors}})
 
         return data
-
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -44,22 +45,21 @@ class UserSerializer(serializers.Serializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
-    
-    
+
     def validate(self, data):
         username = data.get("username")
-        password = data.get("password")        
-        
+        password = data.get("password")
+
         errors = []
-        
+
         if not User.objects.filter(username=username).exists():
             errors.append("Username does not exist")
         else:
-            user = authenticate(username=username, password=password)            
+            user = authenticate(username=username, password=password)
             if user is None:
                 errors.append("Password is incorrect")
 
         if errors:
             raise serializers.ValidationError({"detail": {"errors": errors}})
-        
+
         return {'user': user}
