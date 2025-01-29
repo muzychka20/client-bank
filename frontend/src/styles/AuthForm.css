@@ -65,9 +65,9 @@
     border: none;
     border-radius: 10px;
     background: var(--orange-color);
-    background: -moz-linear-gradient(180deg, var(--orange-color) 0%, rgba(255, 132, 60, 1) 51%, var(--orange-color) 100%);
-    background: -webkit-linear-gradient(180deg, var(--orange-color) 0%, rgba(255, 132, 60, 1) 51%, var(--orange-color) 100%);
-    background: linear-gradient(180deg, var(--orange-color) 0%, rgba(255, 132, 60, 1) 51%, var(--orange-color) 100%);
+    background: -moz-linear-gradient(180deg, var(--orange-color) 0%, var(--light-orange-color) 51%, var(--orange-color) 100%);
+    background: -webkit-linear-gradient(180deg, var(--orange-color) 0%, var(--light-orange-color) 51%, var(--orange-color) 100%);
+    background: linear-gradient(180deg, var(--orange-color) 0%, var(--light-orange-color) 51%, var(--orange-color) 100%);
     font-weight: 600;
 }
 

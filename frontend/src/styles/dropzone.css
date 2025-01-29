@@ -13,13 +13,13 @@
 .dropzone-block {
     max-width: 300px;
     height: 180px;
-    background-color: var(--dropzone-bg-color);
+    background-color: var(--orange-color);
     margin: 0 auto;
     padding: 15px;
 }
 
 .dropzone-wrapper {
-    background-color: var(--dropzone-wrapper-color);
+    background-color: var(--light-orange-color);
     border: var(--white-color) 2px dashed;
     color: var(--white-color);
     height: 100%;
