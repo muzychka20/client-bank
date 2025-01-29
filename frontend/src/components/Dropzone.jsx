@@ -75,6 +75,7 @@ function Dropzone(props) {
     };
     try {
       const res = await api.post("/api/upload/file/", formData, config);
+      console.log(res);
       setFile(null);
     } catch (error) {
       console.log(error);
