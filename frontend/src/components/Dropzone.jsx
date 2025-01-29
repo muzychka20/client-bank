@@ -1,30 +1,100 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import "../styles/Dropzone.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileImage } from "@fortawesome/free-solid-svg-icons";
+import "../styles/Dropzone.css";
+import "../styles/AuthForm.css";
+import api from "../api";
+import {
+  useMessages,
+  MessagesContextProvider,
+} from "../contexts/MessagesContext";
+import Message from "../components/Message";
 
 function Dropzone(props) {
-  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
-    useDropzone({ accept: { "image/*": [] } });
+  const [file, setFile] = useState(null);
+  const { addMessage } = useMessages();
 
-  // Determine the dynamic class based on dropzone state
-  let dropzoneClassName = "dropzone-wrapper";
-  if (isFocused) dropzoneClassName += " dropzone-focused";
-  if (isDragAccept) dropzoneClassName += " dropzone-accept";
-  if (isDragReject) dropzoneClassName += " dropzone-reject";
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > 0) {
+      setFile(acceptedFiles[0]);
+    }
+  }, []);
+
+  const onDropRejected = useCallback(() => {
+    addMessage(
+      <Message
+        name={"File rejected!"}
+        message={"Select one .dbf file!"}
+        type={"error"}
+      />
+    );
+  });
+
+  const onDropAccepted = useCallback(() => {
+    addMessage(
+      <Message
+        name={"Success"}
+        message={"File uploaded successfully"}
+        type={"success"}
+      />
+    );
+  });
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    onDropRejected,
+    onDropAccepted,
+    accept: {
+      "application/vnd.dbf": [".dbf"],
+    },
+    maxFiles: 1,
+  });
+
+  const text = file ? (
+    <p className="dropzone-desc">
+      File <b>{file.name}</b> was uploaded!
+      <br />({file.size} bytes)
+    </p>
+  ) : (
+    <p className="dropzone-desc">Drag and drop your .dbf file here</p>
+  );
+
+  const submitFile = async (e) => {
+    e.preventDefault();
+    if (!file) {
+      alert("Select the file!");
+      return;
+    }
+    let formData = new FormData();
+    formData.append("file", file);
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+    try {
+      const res = await api.post("/api/upload/file/", formData, config);
+      setFile(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <div className="dropzone-block">
-      <div className="dropzone-wrapper" {...getRootProps()}>
-        <input {...getInputProps()} />
-        <div className="dropzone-content">
-          <FontAwesomeIcon icon={faFileImage} className="icon" />
-          <p className="dropzone-title">DROP FILE HERE</p>
-          <p className="dropzone-desc">Drag and drop your .dbf file here.</p>
+    <form onSubmit={submitFile}>
+      <div className="dropzone-block">
+        <div className="dropzone-wrapper" {...getRootProps()}>
+          <input {...getInputProps()} />
+          <div className="dropzone-content">
+            <FontAwesomeIcon icon={faFileImage} className="icon" />
+            <p className="dropzone-title">DROP FILE HERE</p>
+            {text}
+          </div>
         </div>
       </div>
-    </div>
+      <button type="submit" className="form-button">
+        Submit
+      </button>
+    </form>
   );
 }
 

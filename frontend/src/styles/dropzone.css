@@ -61,3 +61,7 @@
 .dropzone-title {
     font-weight: bold;
 }
+
+.dropzone-desc {
+    line-height: 1.4em;
+}
