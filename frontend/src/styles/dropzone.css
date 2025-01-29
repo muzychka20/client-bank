@@ -1,5 +1,11 @@
 @import "./Variables.css";
 
+.dropzone-form {
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
 /* Base dropzone styles */
 .dropzone-block,
 .dropzone-wrapper {
@@ -11,11 +17,13 @@
 }
 
 .dropzone-block {
-    max-width: 300px;
     height: 180px;
     background-color: var(--orange-color);
     margin: 0 auto;
     padding: 15px;
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 180px;
 }
 
 .dropzone-wrapper {
@@ -56,6 +64,7 @@
     gap: 15px;
     text-align: center;
     letter-spacing: 0.2px;
+    padding: 20px;
 }
 
 .dropzone-title {
@@ -64,4 +73,9 @@
 
 .dropzone-desc {
     line-height: 1.4em;
+}
+
+.dropzone-form .form-button {
+    width: 100%;
+    margin-top: 20px;
 }

@@ -5,10 +5,7 @@ import { faFileImage } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Dropzone.css";
 import "../styles/AuthForm.css";
 import api from "../api";
-import {
-  useMessages,
-  MessagesContextProvider,
-} from "../contexts/MessagesContext";
+import { useMessages } from "../contexts/MessagesContext";
 import Message from "../components/Message";
 
 function Dropzone(props) {
@@ -54,7 +51,6 @@ function Dropzone(props) {
   const text = file ? (
     <p className="dropzone-desc">
       File <b>{file.name}</b> was uploaded!
-      <br />({file.size} bytes)
     </p>
   ) : (
     <p className="dropzone-desc">Drag and drop your .dbf file here</p>
@@ -86,7 +82,7 @@ function Dropzone(props) {
   };
 
   return (
-    <form onSubmit={submitFile}>
+    <form onSubmit={submitFile} className="dropzone-form">
       <div className="dropzone-block">
         <div className="dropzone-wrapper" {...getRootProps()}>
           <input {...getInputProps()} />

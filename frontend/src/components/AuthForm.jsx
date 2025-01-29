@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN, USERNAME } from "../constants";
 import LoadingIndicator from "./LoadingIndicator";
 import Message from "./Message";
 import "../styles/AuthForm.css";
@@ -15,7 +15,6 @@ function AuthForm({ route, method }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { addMessage } = useMessages();
-
   const navigate = useNavigate();
   const name = method === "login" ? "Sign In" : "Sign Up";
 
@@ -36,6 +35,7 @@ function AuthForm({ route, method }) {
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+        localStorage.setItem(USERNAME, username);
         navigate("/");
         addMessage(
           <Message
