@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import nextId from "react-id-generator";
 
 // Создаем контекст
 const MessagesContext = createContext();
@@ -8,7 +9,7 @@ export function MessagesContextProvider({ children }) {
 
   const addMessage = (component) => {
     const messageWithTimer = {
-      id: Date.now(),
+      id: nextId(),
       component,
       timeRemaining: 5,
     };
