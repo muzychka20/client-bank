@@ -3,12 +3,17 @@
 header {
     display: flex;
     justify-content: space-between;
-    align-items: center;    
+    align-items: center;
     padding: 15px;
     background-color: var(--white-color);
-    -webkit-box-shadow: 0px 0px 60px -25px rgba(47,72,88,1);
-    -moz-box-shadow: 0px 0px 60px -25px rgba(47,72,88,1);
-    box-shadow: 0px 0px 60px -25px rgba(47,72,88,1);
+    -webkit-box-shadow: 0px 0px 60px -25px rgba(47, 72, 88, 1);
+    -moz-box-shadow: 0px 0px 60px -25px rgba(47, 72, 88, 1);
+    box-shadow: 0px 0px 60px -25px rgba(47, 72, 88, 1);
+}
+
+.header-title {
+    font-size: 28px;
+    font-weight: 900;
 }
 
 .header-info {
@@ -17,7 +22,8 @@ header {
     gap: 30px;
 }
 
-.header-user, .header-logout {
+.header-user,
+.header-logout {
     padding: 5px 8px;
     background-color: var(--violet-color);
     color: var(--white-color);

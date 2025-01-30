@@ -24,6 +24,7 @@
     min-width: 300px;
     max-width: 300px;
     min-height: 180px;
+    box-sizing: initial;
 }
 
 .dropzone-wrapper {
