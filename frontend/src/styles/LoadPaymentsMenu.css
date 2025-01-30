@@ -1,0 +1,23 @@
+@import "../styles/Variables.css";
+
+.payments-button,
+.payments-button-active {
+    padding: 10px 20px;
+}
+
+.payments-button {
+    color: var(--main-color);
+}
+
+.payments-button-active,
+.payments-button:hover {
+    color: #1d4ed8;
+}
+
+.dark .payments-button {
+    color: var(--white-color);
+}
+
+.menu-buttons {
+    margin-top: 20px;
+}

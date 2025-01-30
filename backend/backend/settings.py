@@ -42,7 +42,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
@@ -99,15 +99,19 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
-    #   "default": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": os.getenv("DB_NAME"),
-    #     "USER": os.getenv("DB_USER"),
-    #     "PASSWORD": os.getenv("DB_PWD"),
-    #     "HOST": os.getenv("DB_HOST"),
-    #     "PORT": os.getenv("DB_PORT"),
-    # }
+    },
+    "Bill": {
+        "ENGINE": "mssql",
+        "NAME": os.getenv("BILL_DB_NAME"),
+        "USER": os.getenv("BILL_USER"),
+        "PASSWORD": os.getenv("BILL_PASSWORD"),
+        "HOST": os.getenv("BILL_HOST"),
+        "PORT": os.getenv("BILL_PORT"),
+        "OPTIONS": {
+            "driver": "ODBC Driver 17 for SQL Server", 
+            "extra_params": "Encrypt=yes; TrustServerCertificate=yes",
+        },
+    },
 }
 
 

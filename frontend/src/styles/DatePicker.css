@@ -1,0 +1,24 @@
+@import "./Variables.css";
+
+.date-picker {
+    padding: 10px 20px 10px 40px;
+}
+
+.menu .w-full .relative div {
+    padding: 10px;
+}
+
+.datepicker-styles div:nth-child(1) {
+    padding: 7px;
+}
+
+.datepicker-styles button {
+    border: none;
+    width: fit-content;
+    padding: 5px;
+    margin: auto;
+}
+
+.datepicker-styles button:hover {
+    cursor: pointer;
+}

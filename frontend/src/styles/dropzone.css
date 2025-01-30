@@ -1,9 +1,7 @@
 @import "./Variables.css";
 
 .dropzone-form {
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 50px;
+    width: fit-content;    
 }
 
 /* Base dropzone styles */

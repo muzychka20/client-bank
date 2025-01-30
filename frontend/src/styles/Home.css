@@ -1,0 +1,9 @@
+@import "./Variables.css";
+
+.home-management {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 50px;
+}

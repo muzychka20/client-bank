@@ -77,7 +77,13 @@ function Dropzone(props) {
     };
     try {
       const res = await api.post("/api/upload/file/", formData, config);
-      addPayments(res.data.records);
+      if (res.data && res.data.records) {
+        addPayments(res.data.records);
+      } else if (res.data && res.data.error) {
+        addMessage(
+          <Message name={"error"} message={"error"} type={"error"} />
+        );
+      }
       setFile(null);
     } catch (error) {
       console.log(error);
