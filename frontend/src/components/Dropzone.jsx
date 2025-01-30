@@ -7,10 +7,12 @@ import "../styles/AuthForm.css";
 import api from "../api";
 import { useMessages } from "../contexts/MessagesContext";
 import Message from "../components/Message";
+import { usePayments } from "../contexts/PaymentsContext";
 
 function Dropzone(props) {
   const [file, setFile] = useState(null);
   const { addMessage } = useMessages();
+  const { addPayments } = usePayments();
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
@@ -75,7 +77,7 @@ function Dropzone(props) {
     };
     try {
       const res = await api.post("/api/upload/file/", formData, config);
-      console.log(res);
+      addPayments(res.data.records);
       setFile(null);
     } catch (error) {
       console.log(error);

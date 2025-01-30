@@ -17,8 +17,10 @@ class UploadFileView(APIView):
 
         with DBF(file_path, encoding='cp866') as table:
             for record in table:
+                print(record)
                 records.append({
-                    "date": datetime.strptime(record["DATE"], '%Y-%m-%d %H:%M:%S.%f').strftime("%d.%m.%Y"),
+                    # "date": datetime.strptime(record["DATE"], '%Y-%m-%d %H:%M:%S.%f').strftime("%d.%m.%Y"),
+                    "date": record["DATE"],
                     "num_doc": record["NUM_DOC"],
                     "sum": record["SUM"],
                     "status": "в обработке",
