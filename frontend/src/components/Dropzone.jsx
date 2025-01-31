@@ -82,15 +82,22 @@ function Dropzone(props) {
         addMessage(
           <Message name={"Succces!"} message={"Data loaded!"} type="success" />
         );
+      } else if (res.data && res.data.warning) {
+        addMessage(
+          <Message
+            name={res.data.warning.warning_title}
+            message={res.data.warning.warning_message}
+            type="warning"
+          />
+        );
       }
       setFile(null);
-    } catch (error) {
-      let err = error.response.data.error;
+    } catch (error) {      
       addMessage(
         <Message
           name={err.error_title}
           message={err.error_message}
-          type={"warning"}
+          type={"error"}
         />
       );
     }

@@ -40,6 +40,14 @@ function LoadPaymentsMenu() {
         addMessage(
           <Message name={"Succces!"} message={"Data loaded!"} type="success" />
         );
+      } else if (res.data && res.data.warning) {
+        addMessage(
+          <Message
+            name={res.data.warning.warning_title}
+            message={res.data.warning.warning_message}
+            type="warning"
+          />
+        );
       }
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
@@ -59,14 +67,23 @@ function LoadPaymentsMenu() {
     removePayments();
     try {
       const res = await api.post("/api/payments/clear/");
-      const success = res.data.success;
-      addMessage(
-        <Message
-          name={success.success_title}
-          message={success.success_message}
-          type="success"
-        />
-      );
+      if (res.data && res.data.success) {
+        addMessage(
+          <Message
+            name={res.data.success.success_title}
+            message={res.data.success.success_message}
+            type="warning"
+          />
+        );
+      } else if (res.data && res.data.warning) {
+        addMessage(
+          <Message
+            name={res.data.warning.warning_title}
+            message={res.data.warning.warning_message}
+            type="warning"
+          />
+        );
+      }
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
         const error = err.response.data.error;

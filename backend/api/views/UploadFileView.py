@@ -5,7 +5,7 @@ from rest_framework import status
 from django.core.files.storage import default_storage
 from dbfread import DBF
 from datetime import datetime
-from api.helper.helper import send_error, NoNewDataException
+from api.helper.helper import send_error, send_warning
 from ..models import wtKlientBankTemp
 
 
@@ -34,7 +34,7 @@ class UploadFileView(APIView):
 
                     date = datetime.strptime(date, "%Y%m%d")
                     date = datetime.strftime(date, "%Y-%m-%d")
-                        
+
                     if not wtKlientBankTemp.objects.filter(NumDoc=num_doc, Summa=sum).exists():
                         r = wtKlientBankTemp(
                             NumDoc=num_doc, Date=date, Summa=sum, MfoA=mfo_a, NaznP=n_p, service_old=0)
@@ -53,9 +53,7 @@ class UploadFileView(APIView):
             if records:
                 return Response({'records': records, }, status=status.HTTP_200_OK)
             else:
-                raise NoNewDataException("No new data!")
+                return send_warning("No new data!", "Warning!")
 
-        except NoNewDataException as error:
-            return send_error(error, "Warning!")
         except Exception as error:
             return send_error(error, "Error!")

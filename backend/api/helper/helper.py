@@ -11,8 +11,12 @@ def send_error(error, type):
         }
     }, status=status.HTTP_400_BAD_REQUEST)
 
-class NoDataToDelete(ValueError):
-    pass
 
-class NoNewDataException(ValueError):
-    pass
+def send_warning(warning, type):
+    warning_message = f"{str(warning)}"
+    return JsonResponse({
+        "warning": {
+            "warning_title": type,
+            "warning_message": warning_message,
+        }
+    }, status=status.HTTP_200_OK)

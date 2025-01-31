@@ -2,7 +2,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from api.helper.helper import send_error, NoNewDataException
+from api.helper.helper import send_error, send_warning
 from ..models import wtKlientBankTemp
 
 
@@ -26,9 +26,6 @@ class LoadedPaymentsView(APIView):
             if records:
                 return Response({'records': records, }, status=status.HTTP_200_OK)
             else:
-                raise NoNewDataException("No loaded data!")
-
-        except NoNewDataException as error:
-            return send_error(error, "Warning!")
+                return send_warning("No loaded data!", "Warning!")
         except Exception as error:
             return send_error(error, "Error!")

@@ -1,10 +1,10 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from api.helper.helper import send_error
 from ..models import wtKlientBankTemp
 from rest_framework import status
 from django.http import JsonResponse
-from api.helper.helper import NoDataToDelete
+from api.helper.helper import send_error, send_warning
+
 
 class CleanUploadedPaymentsView(APIView):
     permission_classes = [IsAuthenticated]
@@ -12,7 +12,8 @@ class CleanUploadedPaymentsView(APIView):
     def post(self, request):
         try:
             if not wtKlientBankTemp.objects.exists():
-                raise NoDataToDelete("No data to delete")
+                return send_warning("No loaded data to delete!", "Warning!")
+
             wtKlientBankTemp.objects.all().delete()
             return JsonResponse({
                 "success": {
@@ -20,8 +21,5 @@ class CleanUploadedPaymentsView(APIView):
                     "success_message": "All data removed",
                 }
             }, status=status.HTTP_200_OK)
-        
-        except NoDataToDelete as error:            
-            return send_error(error, "Warning!")
         except Exception as error:
             return send_error(error, "Error!")
