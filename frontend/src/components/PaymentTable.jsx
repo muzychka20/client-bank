@@ -46,34 +46,6 @@ export default function PaymentTable({ loading, setLoading }) {
             </tr>
           </thead>
           {payments.length > 0 ? (
-            <tbody>
-              {payments.map((payment) => (
-                <tr
-                  key={payment.num_doc}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
-                >
-                  <td className="px-6 py-4 table-cell">{payment.date}</td>
-                  <td className="px-6 py-4 table-cell">{payment.num_doc}</td>
-                  <td className="px-6 py-4 table-cell">{payment.sum}</td>
-                  <td className="px-6 py-4 table-cell">
-                    <p className={`${statusStyle[payment.status]}`}>
-                      {status[payment.status]}
-                    </p>
-                  </td>
-                  <td className="px-6 py-4 table-cell">{payment.n_p}</td>
-                  <td className="px-6 py-4 table-cell">
-                    {payment.client_name}
-                  </td>
-                  <td className="px-6 py-4 table-cell">{payment.address}</td>
-                </tr>
-              ))}
-            </tbody>
-          ) : (
-            <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
-              {loading && <LoadingIndicator />}
-            </div>
-          )}
-          {payments.length > 0 ? (
             <tfoot>
               <tr class="font-semibold text-gray-900 dark:text-white">
                 <th scope="row" class="px-6 py-4 text-base table-cell">
@@ -91,6 +63,32 @@ export default function PaymentTable({ loading, setLoading }) {
             <tfoot></tfoot>
           )}
         </table>
+        {payments.length > 0 ? (
+          <tbody>
+            {payments.map((payment) => (
+              <tr
+                key={payment.num_doc}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
+              >
+                <td className="px-6 py-4 table-cell">{payment.date}</td>
+                <td className="px-6 py-4 table-cell">{payment.num_doc}</td>
+                <td className="px-6 py-4 table-cell">{payment.sum}</td>
+                <td className="px-6 py-4 table-cell">
+                  <p className={`${statusStyle[payment.status]}`}>
+                    {status[payment.status]}
+                  </p>
+                </td>
+                <td className="px-6 py-4 table-cell">{payment.n_p}</td>
+                <td className="px-6 py-4 table-cell">{payment.client_name}</td>
+                <td className="px-6 py-4 table-cell">{payment.address}</td>
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
+            {loading && <LoadingIndicator />}
+          </div>
+        )}
       </div>
     </>
   );
