@@ -7,7 +7,7 @@ import Message from "./Message";
 import DatePicker from "./DatePicker";
 import { checkWarnings, checkErrors, checkRecords } from "../helper";
 
-function LoadPaymentsMenu() {
+function LoadPaymentsMenu({ loading, setLoading }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [date, setDate] = useState(new Date());
   const { addPayments, removePayments } = usePayments();
@@ -15,6 +15,7 @@ function LoadPaymentsMenu() {
 
   async function getHistory(index) {
     try {
+      setLoading(true);
       removePayments();
       setActiveIndex(index);
       const formattedDate =
@@ -30,11 +31,14 @@ function LoadPaymentsMenu() {
       checkWarnings(res, addMessage);
     } catch (error) {
       checkErrors(error, addMessage);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function getLoadedData(index) {
     try {
+      setLoading(true);
       removePayments();
       setActiveIndex(index);
       const res = await api.get("/api/payments/loaded/");
@@ -42,6 +46,8 @@ function LoadPaymentsMenu() {
       checkWarnings(res, addMessage);
     } catch (error) {
       checkErrors(error, addMessage);
+    } finally {
+      setLoading(false);
     }
   }
 

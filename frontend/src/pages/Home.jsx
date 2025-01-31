@@ -4,17 +4,19 @@ import PaymentTable from "../components/PaymentTable";
 import { PaymentsContextProvider } from "../contexts/PaymentsContext";
 import LoadPaymentsMenu from "../components/LoadPaymentsMenu";
 import "../styles/Home.css";
+import { useState } from "react";
 
 function Home() {
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <Header />
       <PaymentsContextProvider>
         <div className="home-management">
           <Dropzone />
-          <LoadPaymentsMenu />
+          <LoadPaymentsMenu loading={loading} setLoading={setLoading} />
         </div>
-        <PaymentTable />
+        <PaymentTable loading={loading} setLoading={setLoading} />
       </PaymentsContextProvider>
     </>
   );

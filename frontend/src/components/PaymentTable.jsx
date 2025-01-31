@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/PaymentTable.css";
 import { usePayments } from "../contexts/PaymentsContext";
+import LoadingIndicator from "./LoadingIndicator";
 
-export default function PaymentTable() {
+export default function PaymentTable({ loading, setLoading }) {
   const { payments } = usePayments();
 
   const keys = [
@@ -29,7 +30,6 @@ export default function PaymentTable() {
 
   return (
     <>
-      {<h1>Loaded data from file</h1> && true}
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -45,7 +45,10 @@ export default function PaymentTable() {
               ))}
             </tr>
           </thead>
-          <tbody>
+            <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
+              {loading && <LoadingIndicator />}
+            </div>
+          <tbody>            
             {payments.map((payment) => (
               <tr
                 key={payment.num_doc}
