@@ -73,6 +73,23 @@ export default function PaymentTable({ loading, setLoading }) {
               {loading && <LoadingIndicator />}
             </div>
           )}
+          {payments.length > 0 ? (
+            <tfoot>
+              <tr class="font-semibold text-gray-900 dark:text-white">
+                <th scope="row" class="px-6 py-4 text-base table-cell">
+                  Total
+                </th>
+                <td class="px-6 py-4 table-cell">3 test</td>
+                <td class="px-6 py-4 table-cell">21.000 test</td>
+                <td class="px-6 py-4 table-cell"></td>
+                <td class="px-6 py-4 table-cell"></td>
+                <td class="px-6 py-4 table-cell"></td>
+                <td class="px-6 py-4 table-cell"></td>
+              </tr>
+            </tfoot>
+          ) : (
+            <tfoot></tfoot>
+          )}
         </table>
       </div>
     </>
