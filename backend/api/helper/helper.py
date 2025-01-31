@@ -39,5 +39,11 @@ def parse_date(record):
     except ValueError:
         pass
 
+    try:
+        # Если строка в формате 'DD.MM.YYYY'
+        return datetime.strptime(date_str, "%d.%m.%Y")
+    except ValueError:
+        pass
+
     # Ошибка, если дата не подошла ни под один формат
     raise ValueError(f"Неизвестный формат даты: {date_str}")
