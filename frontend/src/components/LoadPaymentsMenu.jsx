@@ -32,15 +32,27 @@ function LoadPaymentsMenu() {
 
   async function getLoadedData(index) {
     removePayments();
-    const res = await api.get("/api/payments/loaded/");
-    if (res.data && res.data.records) {
-      addPayments(res.data.records);
-    } else {
-      addMessage(
-        <Message name="error" message="No records found" type="error" />
-      );
-    }
     setActiveIndex(index);
+    try {
+      const res = await api.get("/api/payments/loaded/");
+      if (res.data && res.data.records) {
+        addPayments(res.data.records);
+        addMessage(
+          <Message name={"Succces!"} message={"Data loaded!"} type="success" />
+        );
+      }
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        const error = err.response.data.error;
+        addMessage(
+          <Message
+            name={error.error_title}
+            message={error.error_message}
+            type="warning"
+          />
+        );
+      }
+    }
   }
 
   async function clearPayments(index) {

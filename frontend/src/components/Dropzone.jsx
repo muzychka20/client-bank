@@ -79,10 +79,12 @@ function Dropzone(props) {
       const res = await api.post("/api/upload/file/", formData, config);
       if (res.data && res.data.records) {
         addPayments(res.data.records);
+        addMessage(
+          <Message name={"Succces!"} message={"Data loaded!"} type="success" />
+        );
       }
       setFile(null);
     } catch (error) {
-      console.log(error)
       let err = error.response.data.error;
       addMessage(
         <Message
