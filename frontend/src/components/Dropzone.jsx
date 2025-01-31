@@ -93,6 +93,7 @@ function Dropzone(props) {
       }
       setFile(null);
     } catch (error) {      
+      const err = error.response.data.error
       addMessage(
         <Message
           name={err.error_title}

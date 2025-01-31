@@ -4,8 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.files.storage import default_storage
 from dbfread import DBF
-from datetime import datetime
-from api.helper.helper import send_error, send_warning
+from api.helper.helper import send_error, send_warning, parse_date
 from ..models import wtKlientBankTemp
 
 
@@ -23,17 +22,13 @@ class UploadFileView(APIView):
                 for record in table:
                     print(record)
 
-                    date = record.get("DATE", "") if record.get(
-                        "DATE", "") else record["DATA"]
+                    date = parse_date(record)                    
                     num_doc = record.get("NUM_DOC", "") if record.get("NUM_DOC", "") else record.get(
                         "N_D", "") if record.get("N_D", "") else record["ND"]
                     sum = record.get("SUM", "") if record.get("SUM", "") else record.get(
                         "SUMMA", "") if record.get("SUMMA", "") else record["S"]
                     n_p = record["N_P"]
                     mfo_a = record["MFO_A"]
-
-                    date = datetime.strptime(date, "%Y%m%d")
-                    date = datetime.strftime(date, "%Y-%m-%d")
 
                     if not wtKlientBankTemp.objects.filter(NumDoc=num_doc, Summa=sum).exists():
                         r = wtKlientBankTemp(

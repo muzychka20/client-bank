@@ -39,7 +39,7 @@ const options = {
     ),
   },
   datepickerClassNames: "top-12 datepicker-styles",
-  defaultDate: new Date("2024-01-01"),
+  defaultDate: "",
   language: "en",
   disabledDates: [],
   weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],

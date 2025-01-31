@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from rest_framework import status
+from datetime import datetime
 
 
 def send_error(error, type):
@@ -20,3 +21,23 @@ def send_warning(warning, type):
             "warning_message": warning_message,
         }
     }, status=status.HTTP_200_OK)
+
+
+def parse_date(record):
+    date_str = record.get("DATE", "") if record.get(
+        "DATE", "") else record["DATA"]
+
+    try:
+        # Если строка в формате 'YYYY-MM-DD HH:MM:SS.s'
+        return datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S.%f")
+    except ValueError:
+        pass
+
+    try:
+        # Если строка в формате 'YYYYMMDD'
+        return datetime.strptime(date_str, "%Y%m%d")
+    except ValueError:
+        pass
+
+    # Ошибка, если дата не подошла ни под один формат
+    raise ValueError(f"Неизвестный формат даты: {date_str}")
