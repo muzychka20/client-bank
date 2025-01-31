@@ -12,113 +12,88 @@ function LoadPaymentsMenu() {
   const { addPayments, removePayments } = usePayments();
   const { addMessage } = useMessages();
 
+  const loadRecords = (res) => {
+    if (res.data && res.data.records) {
+      addPayments(res.data.records);
+      addMessage(
+        <Message name={"Succces!"} message={"Data loaded!"} type="success" />
+      );
+    }
+  };
+
+  const checkWarnings = (res) => {
+    if (res.data && res.data.warning) {
+      addMessage(
+        <Message
+          name={res.data.warning.warning_title}
+          message={res.data.warning.warning_message}
+          type="warning"
+        />
+      );
+    }
+  };
+
+  const checkErrors = (error) => {
+    if (error.response && error.response.data && error.response.data.error) {
+      const err = error.response.data.error;
+      addMessage(
+        <Message
+          name={err.error_title}
+          message={err.error_message}
+          type="error"
+        />
+      );
+    }
+  };
+
   async function getHistory(index) {
     try {
       removePayments();
       setActiveIndex(index);
-      console.log(date);
       const formattedDate =
         date.getFullYear() +
         "-" +
         String(date.getMonth() + 1).padStart(2, "0") +
         "-" +
         String(date.getDate()).padStart(2, "0");
-
       const res = await api.get("/api/payments/history/", {
         params: { date: formattedDate },
       });
-
-      if (res.data && res.data.records) {
-        addPayments(res.data.records);
-      } else if (res.data && res.data.warning) {
-        addMessage(
-          <Message
-            name={res.data.warning.warning_title}
-            message={res.data.warning.warning_message}
-            type="warning"
-          />
-        );
-      }
+      loadRecords(res);
+      checkWarnings(res);
     } catch (error) {
-      console.log(error);
-      if (error.response && error.response.data && error.response.data.error) {
-        const err = error.response.data.error;
-        addMessage(
-          <Message
-            name={err.error_title}
-            message={err.error_message}
-            type="error"
-          />
-        );
-      }
+      checkErrors(error);
     }
   }
 
   async function getLoadedData(index) {
-    removePayments();
-    setActiveIndex(index);
     try {
+      removePayments();
+      setActiveIndex(index);
       const res = await api.get("/api/payments/loaded/");
-      if (res.data && res.data.records) {
-        addPayments(res.data.records);
-        addMessage(
-          <Message name={"Succces!"} message={"Data loaded!"} type="success" />
-        );
-      } else if (res.data && res.data.warning) {
-        addMessage(
-          <Message
-            name={res.data.warning.warning_title}
-            message={res.data.warning.warning_message}
-            type="warning"
-          />
-        );
-      }
-    } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        const error = err.response.data.error;
-        addMessage(
-          <Message
-            name={error.error_title}
-            message={error.error_message}
-            type="warning"
-          />
-        );
-      }
+      loadRecords(res);
+      checkWarnings(res);
+    } catch (error) {
+      checkErrors(error);
     }
   }
 
   async function clearPayments(index) {
-    removePayments();
     try {
+      removePayments();
       const res = await api.post("/api/payments/clear/");
       if (res.data && res.data.success) {
         addMessage(
           <Message
             name={res.data.success.success_title}
             message={res.data.success.success_message}
-            type="warning"
-          />
-        );
-      } else if (res.data && res.data.warning) {
-        addMessage(
-          <Message
-            name={res.data.warning.warning_title}
-            message={res.data.warning.warning_message}
-            type="warning"
+            type="success"
           />
         );
       }
-    } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        const error = err.response.data.error;
-        addMessage(
-          <Message
-            name={error.error_title}
-            message={error.error_message}
-            type="warning"
-          />
-        );
-      }
+      checkWarnings(res);
+    } catch (error) {
+      checkErrors(error);
     }
   }
 
