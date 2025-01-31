@@ -1,3 +1,4 @@
 from django.contrib import admin
+from api.models import wtKlientBankTemp
 
-# Register your models here.
+admin.site.register(wtKlientBankTemp)

@@ -15,8 +15,8 @@ function LoadPaymentsMenu() {
   async function getHistory(index) {
     try {
       removePayments();
-      console.log(date);      
-      const res = await api.get("/api/payments/history/", { date: date  }); // TODO: send date to server
+      console.log(date);
+      const res = await api.get("/api/payments/history/", { date: date }); // TODO: send date to server
       if (res.data && res.data.records) {
         addPayments(res.data.records);
       } else {
@@ -32,13 +32,47 @@ function LoadPaymentsMenu() {
 
   async function getLoadedData(index) {
     removePayments();
+    const res = await api.get("/api/payments/loaded/");
+    if (res.data && res.data.records) {
+      addPayments(res.data.records);
+    } else {
+      addMessage(
+        <Message name="error" message="No records found" type="error" />
+      );
+    }
     setActiveIndex(index);
-    console.log("carry on...");
+  }
+
+  async function clearPayments(index) {
+    removePayments();
+    try {
+      const res = await api.post("/api/payments/clear/");
+      const success = res.data.success;
+      addMessage(
+        <Message
+          name={success.success_title}
+          message={success.success_message}
+          type="success"
+        />
+      );
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.error) {
+        const error = err.response.data.error;
+        addMessage(
+          <Message
+            name={error.error_title}
+            message={error.error_message}
+            type="warning"
+          />
+        );
+      }
+    }
   }
 
   const items = [
     { id: 1, name: "History", func: getHistory },
-    { id: 2, name: "Loaded data", func: getLoadedData },
+    { id: 2, name: "Loaded payments", func: getLoadedData },
+    { id: 3, name: "Clear payments", func: clearPayments },
   ];
 
   return (

@@ -31,8 +31,7 @@ class UserSerializer(serializers.Serializer):
             errors.append(
                 "Password must contain at least one lowercase letter")
 
-        if errors:
-            # Change the error structure here to be consistent with the LoginSerializer
+        if errors:            
             raise serializers.ValidationError({"detail": {"errors": errors}})
 
         return data
