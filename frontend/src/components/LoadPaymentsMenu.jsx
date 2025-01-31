@@ -5,46 +5,13 @@ import React, { useState } from "react";
 import api from "../api";
 import Message from "./Message";
 import DatePicker from "./DatePicker";
+import { checkWarnings, checkErrors, checkRecords } from "../helper";
 
 function LoadPaymentsMenu() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [date, setDate] = useState(new Date());
   const { addPayments, removePayments } = usePayments();
   const { addMessage } = useMessages();
-
-  const loadRecords = (res) => {
-    if (res.data && res.data.records) {
-      addPayments(res.data.records);
-      addMessage(
-        <Message name={"Succces!"} message={"Data loaded!"} type="success" />
-      );
-    }
-  };
-
-  const checkWarnings = (res) => {
-    if (res.data && res.data.warning) {
-      addMessage(
-        <Message
-          name={res.data.warning.warning_title}
-          message={res.data.warning.warning_message}
-          type="warning"
-        />
-      );
-    }
-  };
-
-  const checkErrors = (error) => {
-    if (error.response && error.response.data && error.response.data.error) {
-      const err = error.response.data.error;
-      addMessage(
-        <Message
-          name={err.error_title}
-          message={err.error_message}
-          type="error"
-        />
-      );
-    }
-  };
 
   async function getHistory(index) {
     try {
@@ -59,10 +26,10 @@ function LoadPaymentsMenu() {
       const res = await api.get("/api/payments/history/", {
         params: { date: formattedDate },
       });
-      loadRecords(res);
-      checkWarnings(res);
+      checkRecords(res, addMessage, addPayments);
+      checkWarnings(res, addMessage);
     } catch (error) {
-      checkErrors(error);
+      checkErrors(error, addMessage);
     }
   }
 
@@ -71,10 +38,10 @@ function LoadPaymentsMenu() {
       removePayments();
       setActiveIndex(index);
       const res = await api.get("/api/payments/loaded/");
-      loadRecords(res);
-      checkWarnings(res);
+      checkRecords(res, addMessage, addPayments);
+      checkWarnings(res, addMessage);
     } catch (error) {
-      checkErrors(error);
+      checkErrors(error, addMessage);
     }
   }
 
@@ -91,9 +58,9 @@ function LoadPaymentsMenu() {
           />
         );
       }
-      checkWarnings(res);
+      checkWarnings(res, addMessage);
     } catch (error) {
-      checkErrors(error);
+      checkErrors(error, addMessage);
     }
   }
 

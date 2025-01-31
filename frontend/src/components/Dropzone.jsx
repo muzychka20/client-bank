@@ -8,6 +8,7 @@ import api from "../api";
 import { useMessages } from "../contexts/MessagesContext";
 import Message from "../components/Message";
 import { usePayments } from "../contexts/PaymentsContext";
+import { checkWarnings, checkErrors, checkRecords } from "../helper";
 
 function Dropzone(props) {
   const [file, setFile] = useState(null);
@@ -77,30 +78,11 @@ function Dropzone(props) {
     };
     try {
       const res = await api.post("/api/upload/file/", formData, config);
-      if (res.data && res.data.records) {
-        addPayments(res.data.records);
-        addMessage(
-          <Message name={"Succces!"} message={"Data loaded!"} type="success" />
-        );
-      } else if (res.data && res.data.warning) {
-        addMessage(
-          <Message
-            name={res.data.warning.warning_title}
-            message={res.data.warning.warning_message}
-            type="warning"
-          />
-        );
-      }
+      checkRecords(res, addMessage, addPayments);
+      checkWarnings(res, addMessage);
       setFile(null);
-    } catch (error) {      
-      const err = error.response.data.error
-      addMessage(
-        <Message
-          name={err.error_title}
-          message={err.error_message}
-          type={"error"}
-        />
-      );
+    } catch (error) {
+      checkErrors(error, addMessage);
     }
   };
 
