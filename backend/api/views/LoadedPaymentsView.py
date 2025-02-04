@@ -13,6 +13,8 @@ class LoadedPaymentsView(APIView):
         try:
             records = []
             items = wtKlientBankTemp.objects.all()
+            total_sum = 0
+
             for record in items:
                 records.append({
                     "date": record.Date,
@@ -23,8 +25,10 @@ class LoadedPaymentsView(APIView):
                     "client_name": "",
                     "address": "",
                 })
+                total_sum += record.Summa
+
             if records:
-                return Response({'records': records, }, status=status.HTTP_200_OK)
+                return Response({'records': records, 'count_record': len(records), 'sum_record': total_sum}, status=status.HTTP_200_OK)
             else:
                 return send_warning("No loaded data!", "Warning!")
         except Exception as error:

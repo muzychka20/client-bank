@@ -17,12 +17,13 @@ class UploadFileView(APIView):
 
             file_path = default_storage.save(f"uploads/{file.name}", file)
             records = []
+            total_sum = 0
 
             with DBF(file_path, encoding='cp866') as table:
                 for record in table:
                     print(record)
 
-                    date = parse_date(record)                    
+                    date = parse_date(record)
                     num_doc = record.get("NUM_DOC", "") if record.get("NUM_DOC", "") else record.get(
                         "N_D", "") if record.get("N_D", "") else record["ND"]
                     sum = record.get("SUM", "") if record.get("SUM", "") else record.get(
@@ -34,7 +35,7 @@ class UploadFileView(APIView):
                         r = wtKlientBankTemp(
                             NumDoc=num_doc, Date=date, Summa=sum, MfoA=mfo_a, NaznP=n_p, service_old=0)
                         r.save()
-
+                        total_sum += sum
                         records.append({
                             "date": date,
                             "num_doc": num_doc,
@@ -46,7 +47,7 @@ class UploadFileView(APIView):
                         })
 
             if records:
-                return Response({'records': records, }, status=status.HTTP_200_OK)
+                return Response({'records': records, 'count_record': len(records), 'sum_record': total_sum}, status=status.HTTP_200_OK)
             else:
                 return send_warning("No new data!", "Warning!")
 
