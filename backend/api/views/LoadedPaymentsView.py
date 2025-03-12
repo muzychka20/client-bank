@@ -27,8 +27,24 @@ class LoadedPaymentsView(APIView):
                 })
                 total_sum += record.Summa
 
+
             if records:
-                return Response({'records': records, 'count_record': len(records), 'sum_record': total_sum}, status=status.HTTP_200_OK)
+                # Implement pagination
+                page_size = 10
+                page = int(request.GET.get("page", 1)) # Default to page 1 if no page query parameter is given
+                start_index = (page - 1) * page_size
+                end_index = page * page_size
+                paginated_records = records[start_index:end_index]
+            
+                return Response(
+                    {
+                        'records': paginated_records,
+                        'count_record': len(records),
+                        'sum_record': total_sum,
+                        'total_pages': (len(records) // page_size) + (1 if len(records) % page_size > 0 else 0),
+                        'current_page': page
+                    },
+                    status=status.HTTP_200_OK)
             else:
                 return send_warning("No loaded data!", "Warning!")
         except Exception as error:

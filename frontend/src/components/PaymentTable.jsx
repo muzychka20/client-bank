@@ -131,7 +131,7 @@ export default function PaymentTable({ loading, setLoading }) {
         <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
           {loading && <LoadingIndicator />}
         </div>
-      </div>
+      </div>      
     </>
   );
 }
