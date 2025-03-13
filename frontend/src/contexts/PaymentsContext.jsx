@@ -7,20 +7,23 @@ export function PaymentsContextProvider({ children }) {
   const [payments, setPayments] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [totalSum, setTotalSum] = useState(0);
+  const [source, setSource] = useState('');
 
-  const addPayments = (payments, countRecords, sumRecords) => {
+  const addPayments = (payments, countRecords, sumRecords, source) => {
     setPayments(payments);
     setTotalRecords(countRecords);
     setTotalSum(sumRecords);
+    setSource(source);
   };
  
   const removePayments = () => {
     setPayments([]);
     setTotalRecords(0);
     setTotalSum(0);
+    setSource('');
   };
   return (
-    <PaymentsContext.Provider value={{ payments, totalRecords, totalSum, addPayments, removePayments }}>
+    <PaymentsContext.Provider value={{ payments, totalRecords, totalSum, source, addPayments, removePayments }}>
       {children}
     </PaymentsContext.Provider>
   );

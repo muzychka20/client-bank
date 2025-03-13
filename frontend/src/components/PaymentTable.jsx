@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import "../styles/PaymentTable.css";
 import { usePayments } from "../contexts/PaymentsContext";
-// import LoadingIndicator from "./LoadingIndicator";
+import LoadingIndicator from "./LoadingIndicator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSortUp,
   faSortDown,
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
-export default function PaymentTable({ loading, setLoading }) {
+
+export default function PaymentTable({ loading, setLoading }) {  
   const [sortKey, setSortKey] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
 
-  const { payments, totalRecords, totalSum } = usePayments();
+  const { payments, totalRecords, totalSum, source } = usePayments();
+  
+  const navigate = useNavigate();
 
   const handleSort = (key) => {
     if (sortKey === key) {
@@ -39,8 +43,6 @@ export default function PaymentTable({ loading, setLoading }) {
     }
   });
 
-  const keys = ["Date", "№ Doc", "Summa", "Status", "NaznP", "Name", "Address"];
-
   const statusStyle = {
     1: "status-process",
     3: "status-deleted",
@@ -48,6 +50,7 @@ export default function PaymentTable({ loading, setLoading }) {
   };
 
   const titles = [
+    { label: "ID", key: "id" },
     { label: "Date", key: "date" },
     { label: "№ Doc", key: "num_doc" },
     { label: "Summa", key: "sum" },
@@ -88,8 +91,10 @@ export default function PaymentTable({ loading, setLoading }) {
             {sortedPayments.map((payment) => (
               <tr
                 key={payment.num_doc}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200"
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 table-row-payment"
+                onClick={() => navigate(`/payments/${source}/${payment.id}`)}                
               >
+                <td className="px-6 py-4 table-cell">{payment.id}</td>
                 <td className="px-6 py-4 table-cell">{payment.date}</td>
                 <td className="px-6 py-4 table-cell">{payment.num_doc}</td>
                 <td className="px-6 py-4 table-cell">{payment.sum}</td>
@@ -122,9 +127,9 @@ export default function PaymentTable({ loading, setLoading }) {
             <tfoot></tfoot>
           )}
         </table>
-        {/* <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
+        <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
           {loading && <LoadingIndicator />}
-        </div> */}
+        </div>
       </div>      
     </>
   );

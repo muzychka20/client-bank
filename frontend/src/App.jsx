@@ -7,6 +7,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "./styles/App.css";
 import MessagesList from "./components/MessagesList";
 import { MessagesContextProvider } from "./contexts/MessagesContext";
+import PaymentCard from "./components/PaymentCard";
+import { PaymentsContextProvider } from "./contexts/PaymentsContext";
 
 function Logout() {
   localStorage.clear();
@@ -21,23 +23,30 @@ function RegisterAndLogout() {
 function App() {
   return (
     <MessagesContextProvider>
-      <MessagesList />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/register" element={<RegisterAndLogout />} />
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <PaymentsContextProvider>
+        <MessagesList />
+        <BrowserRouter>
+          <Routes>
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/payments/history/:id"
+                element={<ProtectedRoute>{<PaymentCard />}</ProtectedRoute>}
+              />
+              <Route path="/payments/loaded/:id" element={<PaymentCard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/register" element={<RegisterAndLogout />} />
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </PaymentsContextProvider>
     </MessagesContextProvider>
   );
 }

@@ -1,0 +1,63 @@
+.payment-card {    
+    height: 100vh;
+}
+
+.main-loading-container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.select-input {
+    padding: 7px;
+}
+
+.text-input-field {
+    margin-top: -15px;
+    padding: 10px; 
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;    
+    min-height: 150px; /* Минимальная высота для удобства */
+    max-height: none; /* Снимаем ограничение */
+    overflow: hidden; /* Скрывает скролл, если он не нужен */    
+    white-space: pre-wrap; /* Сохраняет перенос строк */
+    word-wrap: break-word; /* Разбивает длинные слова */
+}
+
+.button-container-payment-card {    
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.form-button-payment-card{
+    flex: 1; /* Makes buttons take equal width */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+.form-button-payment-card:hover {
+    background-color: #0056b3;
+}
+
+.form-button-payment-card-save {
+    background-color: var(--success-color);
+    color: var(--white-color);
+}
+
+.form-button-payment-card-back {
+    background-color: var(--error-color);
+    color: var(--white-color);
+}

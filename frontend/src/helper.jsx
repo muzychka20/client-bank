@@ -26,9 +26,9 @@ export const checkErrors = (error, addMessage) => {
   }
 };
 
-export const checkRecords = (res, addMessage, addPayments) => {
+export const checkRecords = (res, addMessage, addPayments, source) => {
   if (res.data && res.data.records) {
-    addPayments(res.data.records, res.data.count_record, res.data.sum_record);
+    addPayments(res.data.records, res.data.count_record, res.data.sum_record, source);
     addMessage(
       <Message name={"Succces!"} message={"Data loaded!"} type="success" />
     );

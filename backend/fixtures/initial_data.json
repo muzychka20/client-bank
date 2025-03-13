@@ -1,7 +1,0 @@
-[
-    { "model": "api.refKlientBankStatus", "pk": 1, "fields": { "uid": 1, "name": "в обработке" } },
-    { "model": "api.refKlientBankStatus", "pk": 2, "fields": { "uid": 3, "name": "удален" } },
-    { "model": "api.refKlientBankStatus", "pk": 3, "fields": { "uid": 5, "name": "зачислен" } },
-
-    { "model": "auth.User", "pk": 1, "fields": { "username": "Muzychka20", "password": "Muzychka20", "email": "kyryll2016@gmail.com" } }
-]

@@ -12,7 +12,7 @@ import Pagination from "./Pagination";
 function LoadPaymentsMenu({ loading, setLoading }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [date, setDate] = useState(new Date());
-  const { addPayments, removePayments } = usePayments();
+  const { addPayments, removePayments, payments } = usePayments();
   const { addMessage } = useMessages();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -37,7 +37,7 @@ function LoadPaymentsMenu({ loading, setLoading }) {
 
       setTotalPages(res.data.total_pages);
       setCurrentPage(page);
-      checkRecords(res, addMessage, addPayments);
+      checkRecords(res, addMessage, addPayments, 'history');
       checkWarnings(res, addMessage);
     } catch (error) {
       checkErrors(error, addMessage);
@@ -61,7 +61,7 @@ function LoadPaymentsMenu({ loading, setLoading }) {
 
       setTotalPages(res.data.total_pages);
       setCurrentPage(page);
-      checkRecords(res, addMessage, addPayments);
+      checkRecords(res, addMessage, addPayments, 'loaded');
       checkWarnings(res, addMessage);
     } catch (error) {
       checkErrors(error, addMessage);
@@ -124,9 +124,11 @@ function LoadPaymentsMenu({ loading, setLoading }) {
           </a>
         ))}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
+
+      {(payments.length > 0 && activeIndex != null) && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
         onPageChange={(page) => {
           if (activeIndex === 1) {
             getHistory(activeIndex, page);
@@ -134,7 +136,8 @@ function LoadPaymentsMenu({ loading, setLoading }) {
             getLoadedData(activeIndex, page);
           }
         }}
-      />
+        />
+      )}
     </div>
   );
 }
