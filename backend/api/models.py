@@ -114,4 +114,54 @@ class refLocation(models.Model):
         db_table      = "refLocation"
         db_tablespace = 'Bill'
     def __str__(self):
-        return self.room        
+        return self.room
+
+
+class refClient(models.Model):
+    id           = models.IntegerField(primary_key=True, blank = False)
+    dt0          = models.DateTimeField(blank = False)
+    dt1          = models.DateTimeField(blank = False)
+    keyname      = models.CharField(max_length = 100,blank = False)
+    fullname     = models.CharField(max_length = 500,blank = False)
+    location     = models.IntegerField(blank = False)
+    grp          = models.IntegerField(blank = False)
+    type         = models.IntegerField(blank = False)
+    paymenttype  = models.IntegerField(blank = False)
+    max_credit   = models.DecimalField(max_digits=10, decimal_places=2)
+    saccount     = models.CharField(max_length=6, blank = False)
+    spwd         = models.CharField(max_length=50, blank = False)
+    rtxid        = models.IntegerField(blank = True)
+    dctype       = models.IntegerField(blank = True)
+    curstate     = models.IntegerField(blank = False)
+    i_usr        = models.CharField(max_length=128, blank = False)
+    i_dt         = models.DateTimeField(blank = False)
+    c_usr        = models.CharField(max_length=128, blank = False)
+    c_dt         = models.DateTimeField(blank = True)
+    lawlocation  = models.IntegerField(blank = True)
+    postlocation = models.IntegerField(blank = True)
+    gen_invoice  = models.IntegerField(blank = True)
+    npwd         = models.IntegerField(blank = True)
+    beznal       = models.IntegerField(blank = True)
+    mode         = models.IntegerField(blank = True)
+    keyname_ukr  = models.CharField(max_length=100, blank = False)
+    talk_lang    = models.IntegerField(blank = False)
+    num_rings    = models.IntegerField(blank = True)
+    last_ring    = models.DateTimeField(blank = True)
+    last_lk_dt   = models.DateTimeField(blank = True)
+    last_lk_ip   = models.IntegerField(blank = True)
+
+    class Meta(object):
+        managed       = False
+        db_table      = "refClient"
+        db_tablespace = 'Bill'
+
+    def save(self, *args, **kwargs):        
+        super().save(*args, **kwargs)
+
+        if not self.saccount:
+            self.saccount = '0' + str(self.id)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.keyname   

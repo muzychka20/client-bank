@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-
+from .models import refClient, refCity, refStreet, refHouse, refLocation
 
 class UserSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -62,3 +62,33 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError({"detail": {"errors": errors}})
 
         return {'user': user}
+
+
+class ClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = refClient
+        fields = ['id', 'keyname', 'location']
+
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = refCity
+        fields = ['id', 'name']
+
+
+class StreetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = refStreet
+        fields = ['id', 'keyname', 'city']
+
+
+class HouseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = refHouse
+        fields = ['id', 'house', 'street']
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = refLocation
+        fields = ['id', 'house', 'room']

@@ -3,6 +3,11 @@ from .views.UploadFileView import UploadFileView
 from .views.PaymentHistoryView import PaymentHistoryView
 from .views.LoadedPaymentsView import LoadedPaymentsView
 from .views.CleanUploadedPaymentsView import CleanUploadedPaymentsView
+from .views.ClientsView import ClientsView
+from .views.CitiesView import CitiesView
+from .views.StreetsView import StreetsView
+from .views.HousesView import HousesView
+from .views.LocationsView import LocationsView
 
 urlpatterns = [
     path("upload/file/", UploadFileView.as_view(), name="upload_file"),
@@ -11,4 +16,10 @@ urlpatterns = [
     path("payments/loaded/", LoadedPaymentsView.as_view(), name="payment_loaded"),
     path("payments/loaded/<int:id>/", LoadedPaymentsView.as_view(), name="payment_loaded_id"),
     path("payments/clear/", CleanUploadedPaymentsView.as_view(), name="payment_clear"),    
+    
+    path("clients/", ClientsView.as_view(), name="clients"),
+    path("cities/", CitiesView.as_view(), name="cities"),
+    path("streets/", StreetsView.as_view(), name="streets"),
+    path("houses/", HousesView.as_view(), name="houses"),
+    path("locations/", LocationsView.as_view(), name="locations"),
 ]

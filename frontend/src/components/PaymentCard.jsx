@@ -16,11 +16,36 @@ function PaymentCard() {
   const { source } = usePayments();
   const navigate = useNavigate();
 
+  const [cities, setCities] = useState([]);
+  const [streets, setStreets] = useState([]);
+  const [houses, setHouses] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [clients, setClients] = useState([]);
+
   const statusStyle = {
     1: "status-process",
     3: "status-deleted",
     5: "status-success",
   };
+    
+    const fetchAdditionalData = async () => {
+        try {
+            const citiesResponse = await api.get("/api/cities/");
+            // const streetsResponse = await api.get("/api/streets/");
+            // const housesResponse = await api.get("/api/houses/");
+            // const locationsResponse = await api.get("/api/locations/");
+            
+            // const clientsResponse = await api.get("/api/clients/");
+
+            setCities(citiesResponse.data);
+            // setStreets(streetsResponse.data);
+            // setHouses(housesResponse.data);
+            // setLocations(locationsResponse.data);
+            // setClients(clientsResponse.data);
+        } catch (err) {
+            console.error("Ошибка при загрузке дополнительных данных", err);
+        }
+    };
 
   useEffect(() => {
     async function fetchPayment() {
@@ -30,6 +55,10 @@ function PaymentCard() {
 
         if (response.data) {
           setPayment(response.data);
+          if (response.data.status.id === 1) {
+            console.log("✅✅✅✅✅✅✅✅✅✅✅ Триггер");
+            fetchAdditionalData();
+          }
         } else {
           setError("Данные отсутствуют");
         }
@@ -40,9 +69,8 @@ function PaymentCard() {
         setLoading(false);
       }
     }
-
     if (id) {
-      fetchPayment();
+      fetchPayment();      
     }
   }, [id]);
 
@@ -104,10 +132,12 @@ function PaymentCard() {
             
             {/* Client Name */}
             <div className="form-group">
-                <label htmlFor="client_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Клиент</label>               
-                <select id="client_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input">                    
+                <label htmlFor="client_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Клиент</label>               
+                <select id="client_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input">                    
                 {payment.status.id === 1 ? (   
-                    <option value={null}>---</option>
+                    clients.map(client => (
+                        <option key={client.id} value={client.id}>{client.name}</option>
+                    ))
                 ) : (
                     <option value={payment.client_payment_info.client_name_id}>{payment.client_payment_info.client_name}</option>
                 )}
@@ -124,7 +154,9 @@ function PaymentCard() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input"
             >
                 {payment.status.id === 1 ? (
-                    <option value={null}>---</option>
+                    cities.map(city => (
+                        <option key={city.id} value={city.id}>{city.name}</option>
+                    ))
                 ) : (
                     <option value={payment.client_payment_info.city_id}>
                         {payment.client_payment_info.city}
