@@ -13,3 +13,11 @@ class wtKlientBankTemp(models.Model):
 
     def __str__(self):
         return f"{self.NumDoc} | {self.NaznP}"
+    
+
+class refKlientBankStatus(models.Model):
+    uid = models.IntegerField(null=False, blank=False)
+    name = models.CharField(max_length=200, null=False, blank=False)
+
+    def __str__(self):
+        return f"{self.uid} | {self.name}"

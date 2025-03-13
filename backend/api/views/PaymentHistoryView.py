@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.db import connections
 from api.helper.helper import send_error, send_warning
+from api.models import refKlientBankStatus
 
 
 class PaymentHistoryView(APIView):
@@ -22,7 +23,7 @@ class PaymentHistoryView(APIView):
                         "date": record[1],
                         "num_doc": record[2],
                         "sum": record[3],
-                        "status": record[9],
+                        "status": {"id": record[9], "name": refKlientBankStatus.objects.filter(uid=record[9]).first().name},
                         "n_p": record[6],
                         "client_name": record[16],
                         "address": record[17],

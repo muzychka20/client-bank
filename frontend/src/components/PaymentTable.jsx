@@ -41,12 +41,6 @@ export default function PaymentTable({ loading, setLoading }) {
 
   const keys = ["Date", "№ Doc", "Summa", "Status", "NaznP", "Name", "Address"];
 
-  const status = {
-    1: "в обработке",
-    3: "удален",
-    5: "зачислен",
-  };
-
   const statusStyle = {
     1: "status-process",
     3: "status-deleted",
@@ -100,8 +94,8 @@ export default function PaymentTable({ loading, setLoading }) {
                 <td className="px-6 py-4 table-cell">{payment.num_doc}</td>
                 <td className="px-6 py-4 table-cell">{payment.sum}</td>
                 <td className="px-6 py-4 table-cell">
-                  <p className={`${statusStyle[payment.status]}`}>
-                    {status[payment.status]}
+                  <p className={`${statusStyle[payment.status.id]}`}>
+                    {[payment.status.name]}
                   </p>
                 </td>
                 <td className="px-6 py-4 table-cell">{payment.n_p}</td>

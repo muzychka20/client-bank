@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from api.helper.helper import send_error, send_warning
-from ..models import wtKlientBankTemp
+from ..models import wtKlientBankTemp, refKlientBankStatus
 
 
 class LoadedPaymentsView(APIView):
@@ -13,14 +13,15 @@ class LoadedPaymentsView(APIView):
         try:
             records = []
             items = wtKlientBankTemp.objects.all()
-            total_sum = 0
-
-            for record in items:
+            total_sum = 0            
+            status_obj = refKlientBankStatus.objects.filter(uid=1).first()
+            
+            for record in items:                
                 records.append({
                     "date": record.Date,
                     "num_doc": record.NumDoc,
-                    "sum": record.Summa,
-                    "status": 0,
+                    "sum": record.Summa,                    
+                    "status": {"id": status_obj.uid, "name": status_obj.name},
                     "n_p": record.NaznP,
                     "client_name": "",
                     "address": "",
