@@ -106,10 +106,10 @@ function PaymentCard() {
             <div className="form-group">
                 <label htmlFor="client_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Клиент</label>               
                 <select id="client_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input">                    
-                {payment.client_payment_info.client_name ? (   
-                    <option value={payment.client_payment_info.client_name_id}>{payment.client_payment_info.client_name}</option>
-                ) : (
+                {payment.status.id === 1 ? (   
                     <option value={null}>---</option>
+                ) : (
+                    <option value={payment.client_payment_info.client_name_id}>{payment.client_payment_info.client_name}</option>
                 )}
                 </select>
             </div>
@@ -123,12 +123,12 @@ function PaymentCard() {
                 id="city"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input"
             >
-                {payment.client_payment_info.city ? (
-                    <option value={payment.client_payment_info.city_id}>
-                    {payment.client_payment_info.city}
-                    </option>
-                ) : (
+                {payment.status.id === 1 ? (
                     <option value={null}>---</option>
+                ) : (
+                    <option value={payment.client_payment_info.city_id}>
+                        {payment.client_payment_info.city}
+                    </option>
                 )}
             </select>
             </div>
@@ -142,12 +142,12 @@ function PaymentCard() {
                 id="street"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input"
             >
-                {payment.client_payment_info.street ? (
-                    <option value={payment.client_payment_info.street_id}>
-                    {payment.client_payment_info.street}
-                    </option>
-                ) : (
+                {payment.status.id === 1 ? (
                     <option value={null}>---</option>
+                ) : (
+                    <option value={payment.client_payment_info.street_id}>
+                        {payment.client_payment_info.street}
+                    </option>
                 )}
             </select>
             </div>
@@ -161,12 +161,12 @@ function PaymentCard() {
                 id="house"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input"
             >
-                {payment.client_payment_info.house ? (
-                    <option value={payment.client_payment_info.house_id}>
-                    {payment.client_payment_info.house}
-                    </option>
-                ) : (
+                {payment.status.id === 1 ? (
                     <option value={null}>---</option>
+                ) : (
+                    <option value={payment.client_payment_info.house_id}>
+                        {payment.client_payment_info.house}
+                    </option>
                 )}
             </select>
             </div>
@@ -180,12 +180,12 @@ function PaymentCard() {
                 id="room"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input"
             >
-                {payment.client_payment_info.room ? (
+                {payment.status.id === 1 ? (
+                    <option value={null}>---</option>
+                ) : (
                     <option value={payment.client_payment_info.room_id}>
                     {payment.client_payment_info.room}
                     </option>
-                ) : (
-                    <option value={null}>---</option>
                 )}
             </select>
             </div>
