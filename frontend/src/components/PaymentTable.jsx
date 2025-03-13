@@ -13,7 +13,7 @@ export default function PaymentTable({ loading, setLoading }) {
   const [sortKey, setSortKey] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
 
-  const { payments } = usePayments();
+  const { payments, totalRecords, totalSum } = usePayments();
 
   const handleSort = (key) => {
     if (sortKey === key) {
@@ -116,8 +116,8 @@ export default function PaymentTable({ loading, setLoading }) {
                 <th scope="row" className="px-6 py-4 text-base table-cell">
                   Total
                 </th>
-                <td className="px-6 py-4 table-cell">{0}</td>
-                <td className="px-6 py-4 table-cell">{0}</td>
+                <td className="px-6 py-4 table-cell">{totalRecords}</td>
+                <td className="px-6 py-4 table-cell">{totalSum}</td>
                 <td className="px-6 py-4 table-cell"></td>
                 <td className="px-6 py-4 table-cell"></td>
                 <td className="px-6 py-4 table-cell"></td>
