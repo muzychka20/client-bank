@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/PaymentTable.css";
 import { usePayments } from "../contexts/PaymentsContext";
-import LoadingIndicator from "./LoadingIndicator";
+// import LoadingIndicator from "./LoadingIndicator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSortUp,
@@ -128,9 +128,9 @@ export default function PaymentTable({ loading, setLoading }) {
             <tfoot></tfoot>
           )}
         </table>
-        <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
+        {/* <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
           {loading && <LoadingIndicator />}
-        </div>
+        </div> */}
       </div>      
     </>
   );

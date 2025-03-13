@@ -20,12 +20,7 @@
 
 .menu-buttons {
     margin-top: 20px;
-}
-
-.pagination {
-    margin-top: 15px;
-}
-
-.pagination-cell {
-    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
 }
