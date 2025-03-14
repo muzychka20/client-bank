@@ -22,7 +22,7 @@ function Header() {
     <header>
       <h1 className="header-title">Client Bank</h1>
       <div className="header-info">
-        <p className="header-user">
+        <p className="header-user bg-blue-500">
           <FontAwesomeIcon icon={faUserCircle} /> User:{" "}
           {localStorage.getItem(USERNAME)}
         </p>

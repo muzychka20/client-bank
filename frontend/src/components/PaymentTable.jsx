@@ -98,7 +98,7 @@ export default function PaymentTable({ loading, setLoading }) {
                 <td className="px-6 py-4 table-cell">{payment.num_doc}</td>
                 <td className="px-6 py-4 table-cell">{payment.sum}</td>
                 <td className="px-6 py-4 table-cell">
-                  <p className={`${statusStyle[payment.status.id]}`}>
+                  <p className={`${statusStyle[payment.status.id]} whitespace-nowrap`}>
                     {[payment.status.name]}
                   </p>
                 </td>

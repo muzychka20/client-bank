@@ -24,8 +24,7 @@ header {
 
 .header-user,
 .header-logout {
-    padding: 5px 8px;
-    background-color: var(--violet-color);
+    padding: 5px 8px;    
     color: var(--white-color);
     border-radius: 10px;
 }

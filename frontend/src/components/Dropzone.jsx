@@ -1,9 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react"; 
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileImage } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Dropzone.css";
-import "../styles/AuthForm.css";
 import api from "../api";
 import { useMessages } from "../contexts/MessagesContext";
 import Message from "../components/Message";
@@ -25,7 +24,7 @@ function Dropzone(props) {
     addMessage(
       <Message
         name={"File rejected!"}
-        message={"Select one .dbf file!"}
+        message={"Select a valid file format!"}
         type={"error"}
       />
     );
@@ -56,7 +55,9 @@ function Dropzone(props) {
       File <b>{file.name}</b> was uploaded!
     </p>
   ) : (
-    <p className="dropzone-desc">Drag and drop your .dbf file here</p>
+    <p className="mb-2 text-sm text-gray-500 font-semibold dropzone-desc">
+      Click to upload or drag and drop
+    </p>
   );
 
   const submitFile = async (e) => {
@@ -94,18 +95,20 @@ function Dropzone(props) {
   };
 
   return (
-    <form onSubmit={submitFile} className="dropzone-form">
-      <div className="dropzone-block">
-        <div className="dropzone-wrapper" {...getRootProps()}>
-          <input {...getInputProps()} />
-          <div className="dropzone-content">
-            <FontAwesomeIcon icon={faFileImage} className="icon" />
-            <p className="dropzone-title">DROP FILE HERE</p>
+    <form onSubmit={submitFile}>
+      <div className="flex items-center justify-center w-full">
+          <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition duration-300 ease-in-out dropzone-block">
+          <div {...getRootProps()} className="flex flex-col items-center justify-center pt-5 pb-6">
+            <input {...getInputProps()} />
+            <FontAwesomeIcon icon={faFileImage} className="text-gray-500 dropzone-icon"/>
+            <p className="text-xs text-gray-500 dropzone-desc">
+              .dbf
+            </p>
             {text}
           </div>
         </div>
       </div>
-      <button type="submit" className="form-button">
+      <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out dropzone-button">
         Submit
       </button>
     </form>

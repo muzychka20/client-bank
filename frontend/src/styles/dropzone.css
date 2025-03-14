@@ -1,80 +1,30 @@
 @import "./Variables.css";
 
-.dropzone-form {
-    width: fit-content;    
-}
-
-/* Base dropzone styles */
-.dropzone-block,
-.dropzone-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 20px;
-}
-
 .dropzone-block {
-    height: 180px;
-    background-color: var(--orange-color);
-    margin: 0 auto;
-    padding: 15px;
-    min-width: 300px;
-    max-width: 300px;
-    min-height: 180px;
-    box-sizing: initial;
-}
-
-.dropzone-wrapper {
-    background-color: var(--light-orange-color);
-    border: var(--white-color) 2px dashed;
-    color: var(--white-color);
-    height: 100%;
-    width: 100%;
-}
-
-.dropzone-wrapper:hover {
-    cursor: pointer;
-}
-
-/* Focused state */
-.dropzone-focused {
-    border-color: var(--neutral-color);
-}
-
-/* Accept state */
-.dropzone-accept {
-    border-color: var(--success-color);
-}
-
-/* Reject state */
-.dropzone-reject {
-    border-color: var(--error-color);
-}
-
-.icon {
-    font-size: 24px;
-}
-
-.dropzone-content {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-    letter-spacing: 0.2px;
-    padding: 20px;
-}
-
-.dropzone-title {
-    font-weight: bold;
+    height: 130px;
 }
 
 .dropzone-desc {
-    line-height: 1.4em;
+    padding: 2px 20px;
+    font-size: 16px;
+}
+.dropzone-icon {
+    font-size: 28px;
+    margin: 5px;
 }
 
-.dropzone-form .form-button {
+.dropzone-button {
+    font-size: 16px;    
+    padding: 7px 20px;
+    border: none;
+    border-radius: 5px;    
+    color: var(--white-color);
+    font-size: 16px;
+    cursor: pointer;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 15px;
+}
+
+.dropzone-button:hover {
+    background-color: var(--neutral-color);
 }

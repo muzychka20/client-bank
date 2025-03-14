@@ -20,15 +20,10 @@
     border: 1px solid #ccc;
     width: 100%;
     min-height: 150px;
-    /* Минимальная высота для удобства */
     max-height: none;
-    /* Снимаем ограничение */
     overflow: hidden;
-    /* Скрывает скролл, если он не нужен */
     white-space: pre-wrap;
-    /* Сохраняет перенос строк */
     word-wrap: break-word;
-    /* Разбивает длинные слова */
 }
 
 .button-container-payment-card {
@@ -41,13 +36,11 @@
 }
 
 .form-button-payment-card {
-    flex: 1;
-    /* Makes buttons take equal width */
+    flex: 1;    
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
+    border-radius: 5px;    
+    color: var(--white-color);
     font-size: 16px;
     cursor: pointer;
     text-align: center;
@@ -55,7 +48,7 @@
 }
 
 .form-button-payment-card:hover {
-    background-color: #0056b3;
+    background-color: var(--neutral-color);
 }
 
 .form-button-payment-card-save {
@@ -64,6 +57,6 @@
 }
 
 .form-button-payment-card-back {
-    background-color: var(--error-color);
+    background-color: var(--pink-color);
     color: var(--white-color);
 }
