@@ -1,16 +1,26 @@
 import { usePayments } from "../contexts/PaymentsContext";
 import { useMessages } from "../contexts/MessagesContext";
 import "../styles/LoadPaymentsMenu.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../api";
 import Message from "./Message";
 import DatePicker from "./DatePicker";
 import { checkWarnings, checkErrors, checkRecords } from "../helper";
 import Pagination from "./Pagination";
+import { useLocation } from "react-router-dom";
 
 function LoadPaymentsMenu({ loading, setLoading }) {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const reload = params.get("reload");
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const [date, setDate] = useState(new Date());
+
+  const [date, setDate] = useState(() => {
+    const savedDate = localStorage.getItem("selectedDate");
+    return savedDate ? new Date(savedDate) : new Date();
+  });
+
   const { addPayments, removePayments, payments } = usePayments();
   const { addMessage } = useMessages();
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,6 +70,16 @@ function LoadPaymentsMenu({ loading, setLoading }) {
     }
   }
 
+  useEffect(() => {
+    console.log(reload);
+    if (reload === "2") {
+      getLoadedData(2);
+    }
+    if (reload === "1") {
+      getHistory(1);
+    }
+  }, []);
+
   async function clearPayments(index) {
     try {
       removePayments();
@@ -87,7 +107,7 @@ function LoadPaymentsMenu({ loading, setLoading }) {
 
   return (
     <div className="menu">
-      <DatePicker setDate={setDate} />
+      <DatePicker date={date} setDate={setDate} />
       <div className="inline-flex rounded-md shadow-xs menu-buttons">
         {items.map((item, index) => (
           <a

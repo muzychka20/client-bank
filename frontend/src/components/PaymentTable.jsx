@@ -111,6 +111,7 @@ export default function PaymentTable({ loading, setLoading }) {
           {payments.length > 0 ? (
             <tfoot>
               <tr className="font-semibold text-gray-900 dark:text-white">
+                <td></td>
                 <th scope="row" className="px-6 py-4 text-base table-cell">
                   Total
                 </th>

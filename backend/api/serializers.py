@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import refClient, refCity, refStreet, refHouse, refLocation
 
+
 class UserSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
@@ -31,7 +32,7 @@ class UserSerializer(serializers.Serializer):
             errors.append(
                 "Password must contain at least one lowercase letter")
 
-        if errors:            
+        if errors:
             raise serializers.ValidationError({"detail": {"errors": errors}})
 
         return data
@@ -92,10 +93,10 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = refLocation
         fields = ['id', 'house', 'room']
-        
-        
+
+
 class PaymentSaveSerializer(serializers.Serializer):
+    payment_id = serializers.IntegerField()
     client_id = serializers.IntegerField()
     location_id = serializers.IntegerField()
     on_login = serializers.IntegerField(required=False, default=0)
-    naznp = serializers.CharField()

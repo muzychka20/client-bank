@@ -34,14 +34,14 @@ function PaymentCard() {
     5: "status-success",
   };
 
-  const handleSave = async () => {    
+  const handleSave = async () => {
     try {
-      if (!client || !location) {        
+      if (!client || !location) {
         throw new Error("Client or location is required");
       }
       const res = await api.get("/api/payments/save/", {
         params: {
-          naznp: payment.n_p,
+          payment_id: payment.id,
           client_id: client,
           location_id: location,
           on_login: 0,
@@ -55,13 +55,10 @@ function PaymentCard() {
           type="success"
         />
       );
+      navigate(`/?reload=2`);
     } catch (error) {
       addMessage(
-        <Message
-          name={"Error"}
-          message={error.message}
-          type="warning"
-        />
+        <Message name={"Error"} message={error.message} type="warning" />
       );
     }
   };
@@ -227,9 +224,7 @@ function PaymentCard() {
           </span>
         </p>
 
-        <p className="font-medium text-gray-900 dark:text-white">
-          Purpose:
-        </p>
+        <p className="font-medium text-gray-900 dark:text-white">Purpose:</p>
         <textarea
           id="large-input"
           className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-input-field"
@@ -258,7 +253,7 @@ function PaymentCard() {
                 <select
                   id="city"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input"
-                  onChange={onChangeCity}                                  
+                  onChange={onChangeCity}
                 >
                   {payment.status.id === 1 ? (
                     cities.map((city) => (
@@ -387,7 +382,13 @@ function PaymentCard() {
 
         <div className="button-container-payment-card">
           <button
-            onClick={() => navigate(`/`)}
+            onClick={() => {
+              if (source == "history") {
+                navigate(`/?reload=1`);
+              } else {
+                navigate(`/?reload=2`);
+              }
+            }}
             className="form-button-payment-card form-button-payment-card-back"
           >
             Back

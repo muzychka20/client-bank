@@ -77,8 +77,15 @@ function Dropzone(props) {
       headers: { "content-type": "multipart/form-data" },
     };
     try {
+      addMessage(
+        <Message
+          name={"Uploading..."}
+          message={"Please wait..."}
+          type={"success"}
+        />
+      );
       const res = await api.post("/api/upload/file/", formData, config);
-      checkRecords(res, addMessage, addPayments);
+      checkRecords(res, addMessage, addPayments, "dropzone");
       checkWarnings(res, addMessage);
       setFile(null);
     } catch (error) {
