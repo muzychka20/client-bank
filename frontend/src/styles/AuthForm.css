@@ -9,11 +9,9 @@
     justify-content: center;
     width: fit-content;
     border-radius: 20px;
-    -webkit-box-shadow: 10px 0px 80px -33px var(--orange-color);
-    -moz-box-shadow: 10px 0px 80px -33px var(--orange-color);
-    box-shadow: 10px 0px 80px -33px var(--orange-color);
-
-    /* For Loadig Indicator Circle */
+    -webkit-box-shadow: 10px 0px 80px -33px var(--neutral-color);
+    -moz-box-shadow: 10px 0px 80px -33px var(--neutral-color);
+    box-shadow: 10px 0px 80px -33px var(--neutral-color);
     min-height: 600px;
 }
 
@@ -45,7 +43,7 @@
 
 .form-input {
     border-radius: 10px;
-    padding: 10px 10px 10px 60px;
+    padding: 10px 10px 10px 40px;
     font-size: 16px;
     height: 20px;
     width: 250px;
@@ -69,11 +67,7 @@
     color: var(--white-color);
     font-size: 17px;
     border: none;
-    border-radius: 10px;
-    background: var(--orange-color);
-    background: -moz-linear-gradient(180deg, var(--orange-color) 0%, var(--light-orange-color) 51%, var(--orange-color) 100%);
-    background: -webkit-linear-gradient(180deg, var(--orange-color) 0%, var(--light-orange-color) 51%, var(--orange-color) 100%);
-    background: linear-gradient(180deg, var(--orange-color) 0%, var(--light-orange-color) 51%, var(--orange-color) 100%);
+    border-radius: 10px;    
     font-weight: 600;
 }
 
@@ -121,7 +115,7 @@
 
 .input-icons i::before {
     font-size: 16px;
-    margin-right: 13px;
+    /* margin-right: 13px; */
 }
 
 .input-icons i:nth-child(2) {

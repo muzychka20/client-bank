@@ -5,10 +5,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN, USERNAME } from "../constants";
 import LoadingIndicator from "./LoadingIndicator";
 import Message from "./Message";
 import "../styles/AuthForm.css";
-import {
-  MessagesContextProvider,
-  useMessages,
-} from "../contexts/MessagesContext";
+import { useMessages } from "../contexts/MessagesContext";
 
 function AuthForm({ route, method }) {
   const [username, setUsername] = useState("");
@@ -74,17 +71,13 @@ function AuthForm({ route, method }) {
   };
 
   return (
-    <div className="form-wrapper">
-      <div className="form-image">
-        <img src="./src/images/auth-img.png" alt="image" />
-      </div>
+    <div className="form-wrapper">      
       <form onSubmit={handleSubmit} className="form-container">
         <h1 className="form-title">{name}</h1>
         <div className="input-block">
           <label htmlFor="username">Login</label>
           <div className="input-icons">
-            <i className="fa fa-user"></i>
-            <i className="fa fa-grip-lines-vertical"></i>
+            <i className="fa fa-user"></i>            
             <input
               type="text"
               className="form-input"
@@ -100,8 +93,7 @@ function AuthForm({ route, method }) {
         <div className="input-block">
           <label htmlFor="password">Password</label>
           <div className="input-icons">
-            <i className="fa fa-key"></i>
-            <i className="fa fa-grip-lines-vertical"></i>
+            <i className="fa fa-key"></i>            
             <input
               type="password"
               className="form-input"
@@ -114,7 +106,7 @@ function AuthForm({ route, method }) {
             />
           </div>
         </div>
-        <button type="submit" className="form-button">
+        <button type="submit" className="form-button bg-blue-500">
           {name}
         </button>
         <div className="form-sign-up">
