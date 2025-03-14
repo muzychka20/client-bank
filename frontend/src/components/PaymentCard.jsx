@@ -39,6 +39,7 @@ function PaymentCard() {
       if (!client || !location) {
         throw new Error("Client or location is required");
       }
+  
       const res = await api.get("/api/payments/save/", {
         params: {
           payment_id: payment.id,
@@ -46,21 +47,22 @@ function PaymentCard() {
           location_id: location,
           on_login: 0,
         },
-      });
-      console.log("Response:", res.data);
-      addMessage(
-        <Message
-          name={"Success"}
-          message={"Payment saved successfully"}
-          type="success"
-        />
-      );
-      navigate(`/?reload=2`);
+      });      
+      if (res.data.type == "success") {
+          addMessage(
+            <Message name={"Success"} message={res.data.message} type="success" />
+          );
+          navigate(`/?reload=2`);
+        } else {
+          addMessage(
+            <Message name={"Error"} message={res.data.message} type="error" />
+        );
+      }
     } catch (error) {
       addMessage(
         <Message name={"Error"} message={error.message} type="warning" />
       );
-    }
+    }    
   };
 
   const onChangeCity = async (e) => {

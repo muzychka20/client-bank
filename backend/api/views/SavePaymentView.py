@@ -24,12 +24,14 @@ class SavePaymentView(APIView):
 
         with connections['Bill'].cursor() as cursor:
             cursor.execute("EXEC CB_DetectService @naznp=%s, @client_id=%s, @location_id=%s, @on_login=%s", [klientBank.NaznP, client_id, location_id, on_login])
-            service_id = cursor.fetchone()                        
-
-            if service_id:
-                cursor.execute("EXEC CB_InsertKlientBank @mfo=%s, @dt=%s, @NumDoc=%s, @Summa=%s, @NameB=%s, @NaznP=%s, @username=%s",
-                    [klientBank.MfoA, klientBank.Date, klientBank.NumDoc, klientBank.Summa, klientBank.NameB, klientBank.NaznP, request.user.username])
-
-        wtKlientBankTemp.objects.filter(id=payment_id).first().delete()
-
-        return Response({"service_id": service_id[0] if service_id else 0}, status=status.HTTP_200_OK)
+            service_id = cursor.fetchone()
+            service_id = 0 if service_id is None else service_id[0]
+            cursor.execute("EXEC CB_InsertKlientBank @mfo=%s, @dt=%s, @NumDoc=%s, @Summa=%s, @NameB=%s, @NaznP=%s, @service_id=%s, @username=%s",
+                    [klientBank.MfoA, klientBank.Date, klientBank.NumDoc, klientBank.Summa, klientBank.NameB, klientBank.NaznP, service_id, request.user.username])
+            result = cursor.fetchone()
+            if result[0] == 0:
+                return Response({"type": "error", "message": "Payment not saved"}, status=status.HTTP_200_OK)
+            elif result[0] == -1:
+                return Response({"type": "error", "message": "Payment already exists in Billing"}, status=status.HTTP_200_OK)
+            wtKlientBankTemp.objects.filter(id=payment_id).first().delete()
+            return Response({"type": "success", "message": "Payment saved successfully"}, status=status.HTTP_200_OK)

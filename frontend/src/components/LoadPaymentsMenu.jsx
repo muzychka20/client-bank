@@ -71,7 +71,6 @@ function LoadPaymentsMenu({ loading, setLoading }) {
   }
 
   useEffect(() => {
-    console.log(reload);
     if (reload === "2") {
       getLoadedData(2);
     }
