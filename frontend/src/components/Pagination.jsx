@@ -19,11 +19,29 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       }
     } else {
       if (currentPage <= 9) {
-        pages.push(...Array.from({ length: 10}, (_, i) => i + 1), ellipsis, totalPages);
+        pages.push(
+          ...Array.from({ length: 10 }, (_, i) => i + 1),
+          ellipsis,
+          totalPages
+        );
       } else if (currentPage >= totalPages - 10) {
-        pages.push(1, ellipsis, ...Array.from({ length: 10 }, (_, i) => totalPages - 9 + i));
+        pages.push(
+          1,
+          ellipsis,
+          ...Array.from({ length: 10 }, (_, i) => totalPages - 9 + i)
+        );
       } else {
-        pages.push(1, ellipsis, currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2, ellipsis, totalPages);
+        pages.push(
+          1,
+          ellipsis,
+          currentPage - 2,
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          currentPage + 2,
+          ellipsis,
+          totalPages
+        );
       }
     }
 

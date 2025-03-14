@@ -10,13 +10,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
-
-export default function PaymentTable({ loading, setLoading }) {  
+export default function PaymentTable({ loading, setLoading }) {
   const [sortKey, setSortKey] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
 
   const { payments, totalRecords, totalSum, source } = usePayments();
-  
+
   const navigate = useNavigate();
 
   const handleSort = (key) => {
@@ -92,7 +91,7 @@ export default function PaymentTable({ loading, setLoading }) {
               <tr
                 key={payment.num_doc}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 table-row-payment"
-                onClick={() => navigate(`/payments/${source}/${payment.id}`)}                
+                onClick={() => navigate(`/payments/${source}/${payment.id}`)}
               >
                 <td className="px-6 py-4 table-cell">{payment.id}</td>
                 <td className="px-6 py-4 table-cell">{payment.date}</td>
@@ -130,7 +129,7 @@ export default function PaymentTable({ loading, setLoading }) {
         <div className="table-loading relative overflow-x-auto shadow-md sm:rounded-lg payment-table-block">
           {loading && <LoadingIndicator />}
         </div>
-      </div>      
+      </div>
     </>
   );
 }

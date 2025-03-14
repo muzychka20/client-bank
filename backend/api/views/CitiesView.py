@@ -4,5 +4,8 @@ from ..models import refCity
 from ..serializers import CitySerializer
 
 class CitiesView(generics.ListAPIView):
-    queryset = refCity.objects.using('Bill').all()
     serializer_class = CitySerializer
+
+    def get_queryset(self):
+        queryset = refCity.objects.using('Bill').exclude(id=0)
+        return queryset

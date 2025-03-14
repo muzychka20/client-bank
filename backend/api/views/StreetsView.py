@@ -4,5 +4,12 @@ from ..serializers import StreetSerializer
 
 
 class StreetsView(generics.ListAPIView):
-    queryset = refStreet.objects.using('Bill').all()
     serializer_class = StreetSerializer
+    
+    def get_queryset(self):        
+        city_id = self.request.query_params.get('city_id', None)        
+        if city_id:
+            queryset = refStreet.objects.using('Bill').filter(city=city_id)
+        else:
+            queryset = refStreet.objects.using('Bill').all()
+        return queryset

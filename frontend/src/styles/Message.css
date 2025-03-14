@@ -34,7 +34,7 @@
     gap: 10px;
 }
 
-.message-text {    
+.message-text {
     font-size: 15px;
     margin-top: 5px;
 }
@@ -77,12 +77,15 @@
     0% {
         opacity: 1;
     }
+
     50% {
         opacity: 1;
     }
+
     75% {
         opacity: 0.5;
     }
+
     100% {
         opacity: 0;
     }

@@ -5,5 +5,12 @@ from ..serializers import LocationSerializer
 
 
 class LocationsView(generics.ListAPIView):
-    queryset = refLocation.objects.using('Bill').all()
     serializer_class = LocationSerializer
+    
+    def get_queryset(self):        
+        house_id = self.request.query_params.get('house_id', None)        
+        if house_id:
+            queryset = refLocation.objects.using('Bill').filter(house=house_id)
+        else:
+            queryset = refLocation.objects.using('Bill').all()
+        return queryset

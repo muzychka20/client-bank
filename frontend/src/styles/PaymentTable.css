@@ -36,11 +36,11 @@
 
 .table-loading {
     display: flex;
-    justify-content: center;    
+    justify-content: center;
     align-items: center;
-    margin: 0 auto;    
-    position: fixed;    
-    margin-top: 40px;    
+    margin: 0 auto;
+    position: fixed;
+    margin-top: 40px;
     overflow-y: hidden;
 }
 

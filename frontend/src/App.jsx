@@ -27,19 +27,19 @@ function App() {
         <MessagesList />
         <BrowserRouter>
           <Routes>
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <Home />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/payments/history/:id"
-                element={<ProtectedRoute>{<PaymentCard />}</ProtectedRoute>}
-              />
-              <Route path="/payments/loaded/:id" element={<PaymentCard />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payments/history/:id"
+              element={<ProtectedRoute>{<PaymentCard />}</ProtectedRoute>}
+            />
+            <Route path="/payments/loaded/:id" element={<PaymentCard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/register" element={<RegisterAndLogout />} />

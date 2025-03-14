@@ -1,4 +1,4 @@
-.payment-card {    
+.payment-card {
     height: 100vh;
 }
 
@@ -15,18 +15,23 @@
 
 .text-input-field {
     margin-top: -15px;
-    padding: 10px; 
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    width: 100%;    
-    min-height: 150px; /* Минимальная высота для удобства */
-    max-height: none; /* Снимаем ограничение */
-    overflow: hidden; /* Скрывает скролл, если он не нужен */    
-    white-space: pre-wrap; /* Сохраняет перенос строк */
-    word-wrap: break-word; /* Разбивает длинные слова */
+    width: 100%;
+    min-height: 150px;
+    /* Минимальная высота для удобства */
+    max-height: none;
+    /* Снимаем ограничение */
+    overflow: hidden;
+    /* Скрывает скролл, если он не нужен */
+    white-space: pre-wrap;
+    /* Сохраняет перенос строк */
+    word-wrap: break-word;
+    /* Разбивает длинные слова */
 }
 
-.button-container-payment-card {    
+.button-container-payment-card {
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -35,8 +40,9 @@
     flex-wrap: nowrap;
 }
 
-.form-button-payment-card{
-    flex: 1; /* Makes buttons take equal width */
+.form-button-payment-card {
+    flex: 1;
+    /* Makes buttons take equal width */
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -46,8 +52,8 @@
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s ease;
-  }
-  
+}
+
 .form-button-payment-card:hover {
     background-color: #0056b3;
 }

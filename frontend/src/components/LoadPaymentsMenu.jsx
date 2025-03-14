@@ -8,7 +8,6 @@ import DatePicker from "./DatePicker";
 import { checkWarnings, checkErrors, checkRecords } from "../helper";
 import Pagination from "./Pagination";
 
-
 function LoadPaymentsMenu({ loading, setLoading }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [date, setDate] = useState(new Date());
@@ -37,7 +36,7 @@ function LoadPaymentsMenu({ loading, setLoading }) {
 
       setTotalPages(res.data.total_pages);
       setCurrentPage(page);
-      checkRecords(res, addMessage, addPayments, 'history');
+      checkRecords(res, addMessage, addPayments, "history");
       checkWarnings(res, addMessage);
     } catch (error) {
       checkErrors(error, addMessage);
@@ -54,14 +53,14 @@ function LoadPaymentsMenu({ loading, setLoading }) {
       const res = await api.get("/api/payments/loaded/", {
         params: { page: page },
       });
-      
+
       console.log(res.data);
       console.log(res.data.count_record);
       console.log(res.data.sum_record);
 
       setTotalPages(res.data.total_pages);
       setCurrentPage(page);
-      checkRecords(res, addMessage, addPayments, 'loaded');
+      checkRecords(res, addMessage, addPayments, "loaded");
       checkWarnings(res, addMessage);
     } catch (error) {
       checkErrors(error, addMessage);
@@ -125,17 +124,17 @@ function LoadPaymentsMenu({ loading, setLoading }) {
         ))}
       </div>
 
-      {(payments.length > 0 && activeIndex != null) && (
+      {payments.length > 0 && activeIndex != null && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-        onPageChange={(page) => {
-          if (activeIndex === 1) {
-            getHistory(activeIndex, page);
-          } else if (activeIndex === 2) {
-            getLoadedData(activeIndex, page);
-          }
-        }}
+          onPageChange={(page) => {
+            if (activeIndex === 1) {
+              getHistory(activeIndex, page);
+            } else if (activeIndex === 2) {
+              getLoadedData(activeIndex, page);
+            }
+          }}
         />
       )}
     </div>

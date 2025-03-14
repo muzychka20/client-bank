@@ -1,6 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRightFromBracket,
+  faUserCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { USERNAME } from "../constants";
 import "../styles/Header.css";
 

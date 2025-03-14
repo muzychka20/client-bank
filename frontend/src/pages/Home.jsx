@@ -9,12 +9,12 @@ function Home() {
   const [loading, setLoading] = useState(false);
   return (
     <>
-      <Header />      
-        <div className="home-management">
-          <Dropzone />
-          <LoadPaymentsMenu loading={loading} setLoading={setLoading} />
-        </div>
-        <PaymentTable loading={loading} setLoading={setLoading} />
+      <Header />
+      <div className="home-management">
+        <Dropzone />
+        <LoadPaymentsMenu loading={loading} setLoading={setLoading} />
+      </div>
+      <PaymentTable loading={loading} setLoading={setLoading} />
     </>
   );
 }
