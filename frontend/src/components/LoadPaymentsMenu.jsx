@@ -30,10 +30,6 @@ function LoadPaymentsMenu({ loading, setLoading }) {
       const res = await api.get("/api/payments/history/", {
         params: { date: formattedDate, page: page },
       });
-
-      console.log(res.data.count_record);
-      console.log(res.data.sum_record);
-
       setTotalPages(res.data.total_pages);
       setCurrentPage(page);
       checkRecords(res, addMessage, addPayments, "history");
@@ -53,11 +49,6 @@ function LoadPaymentsMenu({ loading, setLoading }) {
       const res = await api.get("/api/payments/loaded/", {
         params: { page: page },
       });
-
-      console.log(res.data);
-      console.log(res.data.count_record);
-      console.log(res.data.sum_record);
-
       setTotalPages(res.data.total_pages);
       setCurrentPage(page);
       checkRecords(res, addMessage, addPayments, "loaded");

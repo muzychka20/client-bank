@@ -1,26 +1,26 @@
-import "../styles/NotFound.css"
+import "../styles/NotFound.css";
 
 function NotFound() {
   return (
     <div className="not-found-section">
-      <section className="bg-white dark:bg-gray-900">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-          <div className="mx-auto max-w-screen-sm text-center">
-            <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-primary-600 dark:text-primary-500">
+      <section className="bg-gradient-to-r from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900">
+        <div className="py-12 px-6 mx-auto max-w-screen-xl text-center lg:py-20">
+          <div className="mx-auto max-w-md">
+            <h1 className="bg-blue-600 mb-6 text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 dark:from-red-400 dark:to-red-700">
               404
             </h1>
-            <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">
-              Something's missing.
+            <p className="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-200">
+              Oops! Page not found.
             </p>
-            <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
-              Sorry, we can't find that page. You'll find lots to explore on the
-              home page.{" "}
+            <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
+              Sorry, we can’t find that page. You can go back to the homepage
+              and continue browsing.
             </p>
             <a
-              href="#"
-              className="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4"
+              href="/"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
             >
-              Back to Homepage
+              Go Home
             </a>
           </div>
         </div>

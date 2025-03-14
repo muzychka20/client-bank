@@ -4,3 +4,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.not-found-section a {
+    margin-top: 20px;
+    padding: 10px 30px;
+}

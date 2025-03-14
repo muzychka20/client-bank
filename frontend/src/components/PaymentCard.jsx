@@ -6,24 +6,26 @@ import { useNavigate } from "react-router-dom";
 import { usePayments } from "../contexts/PaymentsContext";
 import api from "../api";
 import "../styles/PaymentCard.css";
+import { useMessages } from "../contexts/MessagesContext";
+import Message from "./Message";
 
 function PaymentCard() {
   const { id } = useParams();
-  const [payment, setPayment] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { source } = usePayments();
+  const { addMessage } = useMessages();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [payment, setPayment] = useState(null);
+
   const [cities, setCities] = useState([]);
-  const [city, setCity] = useState(null);
   const [streets, setStreets] = useState([]);
-  const [street, setStreet] = useState(null);
   const [houses, setHouses] = useState([]);
-  const [house, setHouse] = useState(null);
   const [locations, setLocations] = useState([]);
-  const [location, setLocation] = useState(null);
   const [clients, setClients] = useState([]);
+
+  const [location, setLocation] = useState(null);
   const [client, setClient] = useState(null);
 
   const statusStyle = {
@@ -32,19 +34,41 @@ function PaymentCard() {
     5: "status-success",
   };
 
-  const handleSave = async () => {
-    console.log("Saving payment...");
-    console.log("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖");
-    console.log("Final data:");
-    console.log(payment);
-    console.log(client, city, street, house, location);
-    console.log("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖");
+  const handleSave = async () => {    
+    try {
+      if (!client || !location) {        
+        throw new Error("Client or location is required");
+      }
+      const res = await api.get("/api/payments/save/", {
+        params: {
+          naznp: payment.n_p,
+          client_id: client,
+          location_id: location,
+          on_login: 0,
+        },
+      });
+      console.log("Response:", res.data);
+      addMessage(
+        <Message
+          name={"Success"}
+          message={"Payment saved successfully"}
+          type="success"
+        />
+      );
+    } catch (error) {
+      addMessage(
+        <Message
+          name={"Error"}
+          message={error.message}
+          type="warning"
+        />
+      );
+    }
   };
 
   const onChangeCity = async (e) => {
     try {
       let cityId = e.target.value;
-      setCity(cityId);
       const streetsResponse = await api.get(`/api/streets?city_id=${cityId}`);
       const streetsWithEmpty = [
         { id: -1, keyname: "---" },
@@ -62,7 +86,6 @@ function PaymentCard() {
   const onChangeStreet = async (e) => {
     try {
       let streetId = e.target.value;
-      setStreet(streetId);
       const housesResponse = await api.get(`/api/houses?street_id=${streetId}`);
       const housesWithEmpty = [
         { id: -1, house: "---" },
@@ -79,7 +102,6 @@ function PaymentCard() {
   const onChangeHouse = async (e) => {
     try {
       let houseId = e.target.value;
-      setHouse(houseId);
       const locationsResponse = await api.get(
         `/api/locations?house_id=${houseId}`
       );
@@ -121,9 +143,6 @@ function PaymentCard() {
       const citiesResponse = await api.get("/api/cities/");
       const citiesWithEmpty = [{ id: -1, name: "---" }, ...citiesResponse.data];
       setCities(citiesWithEmpty);
-      setCity(0);
-      setStreet(0);
-      setHouse(0);
       setLocation(0);
       setStreets([{ id: -1, keyname: "---" }]);
       setHouses([{ id: -1, house: "---" }]);
@@ -137,6 +156,9 @@ function PaymentCard() {
   useEffect(() => {
     async function fetchPayment() {
       try {
+        if (!source) {
+          throw new Error("Source is required");
+        }
         const response = await api.get(`/api/payments/${source}/${id}/`);
         if (response.data) {
           setPayment(response.data);
@@ -147,8 +169,7 @@ function PaymentCard() {
           setError("Данные отсутствуют");
         }
       } catch (err) {
-        setError("Ошибка загрузки данных");
-        console.error(err);
+        navigate("/");
       } finally {
         setLoading(false);
       }
@@ -157,10 +178,6 @@ function PaymentCard() {
       fetchPayment();
     }
   }, [id]);
-
-  useEffect(() => {
-    console.log("Обновленные данные:", payment);
-  }, [payment]);
 
   if (loading) {
     return (
@@ -171,25 +188,24 @@ function PaymentCard() {
   }
 
   if (error) return <p className="text-red-500">{error}</p>;
-
   if (!payment) return null;
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4 payment-card">
       <Card className="w-full max-w-md" style={{ padding: "30px" }}>
         <h5 className="text-xl font-bold text-gray-900">
-          Платіж №{payment.num_doc}
+          Payment №{payment.num_doc}
         </h5>
         <p
           className="text-gray-700 flex"
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
           <span className="mr-4">
-            Дата: {new Date(payment.date).toLocaleDateString()}
+            Date: {new Date(payment.date).toLocaleDateString()}
           </span>
           {payment.dt_load && (
             <span>
-              Загрузка: {new Date(payment.dt_load).toLocaleDateString()}
+              Loading date: {new Date(payment.dt_load).toLocaleDateString()}
             </span>
           )}
         </p>
@@ -198,21 +214,21 @@ function PaymentCard() {
           style={{ flexDirection: "row", justifyContent: "space-between" }}
         >
           <span className="text-gray-900 font-semibold">
-            Сума: {payment.sum} грн
+            Sum: {payment.sum} UAH
           </span>
           {payment.name_bank && (
-            <span className="text-gray-700">Банк: {payment.name_bank}</span>
+            <span className="text-gray-700">Bank: {payment.name_bank}</span>
           )}
         </p>
         <p className="font-medium text-gray-900 dark:text-white">
-          Статус:{" "}
+          Status:{" "}
           <span className={`${statusStyle[payment.status.id]}`}>
             {payment.status.name}
           </span>
         </p>
 
         <p className="font-medium text-gray-900 dark:text-white">
-          Призначення:
+          Purpose:
         </p>
         <textarea
           id="large-input"
@@ -237,12 +253,12 @@ function PaymentCard() {
                   htmlFor="city"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Місто
+                  City
                 </label>
                 <select
                   id="city"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-input"
-                  onChange={onChangeCity}
+                  onChange={onChangeCity}                                  
                 >
                   {payment.status.id === 1 ? (
                     cities.map((city) => (
@@ -264,7 +280,7 @@ function PaymentCard() {
                   htmlFor="street"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Вулиця
+                  Street
                 </label>
                 <select
                   id="street"
@@ -291,7 +307,7 @@ function PaymentCard() {
                   htmlFor="house"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Будинок
+                  House
                 </label>
                 <select
                   id="house"
@@ -318,7 +334,7 @@ function PaymentCard() {
                   htmlFor="room"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Квартира
+                  Apartment
                 </label>
                 <select
                   id="room"
@@ -345,7 +361,7 @@ function PaymentCard() {
                   htmlFor="client_name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Клієнт
+                  Client
                 </label>
                 <select
                   id="client_name"
@@ -374,14 +390,14 @@ function PaymentCard() {
             onClick={() => navigate(`/`)}
             className="form-button-payment-card form-button-payment-card-back"
           >
-            Назад
+            Back
           </button>
           {payment.status.id === 1 && (
             <button
               className="form-button-payment-card form-button-payment-card-save"
               onClick={handleSave}
             >
-              Зберегти
+              Save
             </button>
           )}
         </div>

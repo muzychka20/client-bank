@@ -1,0 +1,27 @@
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from ..serializers import PaymentSaveSerializer
+from django.db import connections
+
+class SavePaymentView(APIView):
+    def get(self, request):
+        serializer = PaymentSaveSerializer(data=request.query_params)
+
+        if not serializer.is_valid():
+            return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        print(serializer.validated_data)
+
+        naznp = serializer.validated_data["naznp"]
+        client_id = serializer.validated_data["client_id"]
+        location_id = serializer.validated_data["location_id"]
+        on_login = serializer.validated_data["on_login"]
+        
+        print(naznp, client_id, location_id, on_login)
+        
+        with connections['Bill'].cursor() as cursor:
+            cursor.execute("EXEC CB_DetectService @naznp=%s, @client_id=%s, @location_id=%s, @on_login=%s", [naznp, client_id, location_id, on_login])
+            service_id = cursor.fetchone()
+
+        return Response({"service_id": service_id[0] if service_id else 0}, status=status.HTTP_200_OK)

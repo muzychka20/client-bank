@@ -92,3 +92,10 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = refLocation
         fields = ['id', 'house', 'room']
+        
+        
+class PaymentSaveSerializer(serializers.Serializer):
+    client_id = serializers.IntegerField()
+    location_id = serializers.IntegerField()
+    on_login = serializers.IntegerField(required=False, default=0)
+    naznp = serializers.CharField()

@@ -34,7 +34,7 @@ class PaymentHistoryView(APIView):
                         "address": row[17],
                     }
                     service_id = row[11]
-                    cursor.execute("exec CB_GetPaymentInfoByService %s", [service_id])
+                    cursor.execute("exec CB_GetAddressByService %s", [service_id])
                     row = cursor.fetchone()
                     if not row:
                         return send_warning(f"No service found with ID {id}", "Warning!")
