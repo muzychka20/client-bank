@@ -18,6 +18,7 @@ export const refreshToken = () => {
     })
     .catch((error) => {
       console.error("Error updating token:", error);
+      localStorage.clear();
     });
 };
 
@@ -57,6 +58,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         // If token refresh fails, redirect to login
         console.error("Token refresh failed, logging out...");
+        localStorage.clear();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
