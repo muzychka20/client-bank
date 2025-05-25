@@ -10,7 +10,9 @@ class wtKlientBankTemp(models.Model):
         max_digits=10, decimal_places=2, null=False, blank=False)
     MfoA = models.CharField(max_length=9, null=False, blank=False)
     NaznP = models.CharField(max_length=200, null=False, blank=False)
+    service_id = models.IntegerField(null=True, blank=True)
     service_old = models.IntegerField(null=True, blank=True)
+    status = models.IntegerField(null=True, blank=True, default=1)
     NameB = models.CharField(max_length=50, null=False,
                              blank=False, default='ДНIПРО.ТВ ТОВ')
 
