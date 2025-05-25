@@ -42,6 +42,27 @@ export default function AnalyzeButtons() {
     }
   }
 
+  async function transferStatus6Payments() {
+    try {
+      setLoading(true);
+      const res = await api.post("ai/transfer/payment/");
+      if (res.data.success) {
+        addMessage(
+          <Message
+            name="Success"
+            message={res.data.message}
+            type="success"
+          />
+        );
+      }
+      checkWarnings(res, addMessage);
+    } catch (error) {
+      checkErrors(error, addMessage);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -55,7 +76,7 @@ export default function AnalyzeButtons() {
           </button>
           <button 
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out dropzone-button" 
-            onClick={() => console.log("Commit")}
+            onClick={transferStatus6Payments}
             disabled={loading}
           >
             Commit

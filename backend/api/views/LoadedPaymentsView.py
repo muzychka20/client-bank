@@ -100,3 +100,50 @@ class LoadedPaymentsView(APIView):
                 return send_warning("No loaded data!", "Warning!")
         except Exception as error:
             return send_error(error, "Error!")
+
+    def post(self, request):
+        try:
+            # Get all records with status 6
+            records = wtKlientBankTemp.objects.filter(status=6)
+            success_count = 0
+            error_count = 0
+            already_exists_count = 0
+
+            with connections['Bill'].cursor() as cursor:
+                for record in records:
+                    # Execute CB_DetectService for each record
+                    cursor.execute(
+                        "EXEC CB_DetectService @naznp=%s, @client_id=%s, @location_id=%s, @on_login=%s",
+                        [record.NaznP, record.client_id, record.location_id, True]
+                    )
+                    service_id = cursor.fetchone()
+                    service_id = 0 if service_id is None else service_id[0]
+
+                    # Execute CB_InsertKlientBank
+                    cursor.execute(
+                        "EXEC CB_InsertKlientBank @mfo=%s, @dt=%s, @NumDoc=%s, @Summa=%s, @NameB=%s, @NaznP=%s, @service_id=%s, @username=%s",
+                        [record.MfoA, record.Date, record.NumDoc, record.Summa, record.NameB, record.NaznP, service_id, request.user.username]
+                    )
+                    result = cursor.fetchone()
+
+                    if result[0] == 1:  # Success
+                        success_count += 1
+                        record.delete()
+                    elif result[0] == -1:  # Already exists
+                        already_exists_count += 1
+                        record.delete()
+                    else:  # Error
+                        error_count += 1
+
+            total_processed = success_count + error_count + already_exists_count
+            
+            if total_processed == 0:
+                return send_warning("No payments with status 6 found", "Warning!")
+
+            return Response({
+                "success": True,
+                "message": f"Processed {total_processed} payments: {success_count} saved successfully, {already_exists_count} already existed, {error_count} failed"
+            }, status=status.HTTP_200_OK)
+
+        except Exception as error:
+            return send_error(error, "Error processing payments!")
