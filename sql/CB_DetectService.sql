@@ -1,4 +1,4 @@
-ALTER proc CB_DetectService
+create proc CB_DetectService
 	@naznp varchar(200),
 	@client_id int,
 	@location_id int,
@@ -10,9 +10,9 @@ begin
 		@login int = 0,
 		@work varchar(200) = ''
 
-	if @on_login = 1 -- оПНБЕПЙЮ МЮ КНЦХМ Б кй
+	if @on_login = 1 -- check login
 	begin
-		set @work = replace(@naznp, ' ', '')+'<0>'   -- 'Hello World'  -> 'HelloWorld<0>'  ФДЕЛ МЮ БУНДЕ КНЦХМ Б <>  example: <18033>
+		set @work = replace(@naznp, ' ', '')+'<0>'   -- 'Hello World'  -> 'HelloWorld<0>';  example: <18033>
 		set @work = substring(@work, CHARINDEX('<', @work) + 1, abs(CHARINDEX('>', @work) - CHARINDEX('<', @work) - 1)) -- 'HelloWorld<example>Test' -> 'example'
 		begin try
 			set @login = convert(int, @work)
@@ -53,18 +53,3 @@ end
 USE [i_bill_serv2];
 GRANT EXEC ON dbo.CB_DetectService TO PUBLIC
 */
-
--- select * from wtServices where id = 16673
--- SELECT * FROM wtServicesInternet where id = 16673
-
--- exec CB_DetectService 'сяксцх днярсою й яерх хмрепмер;лсгшвйю юкейяюмдп пнлюмнбхв;ск.кебюдмюъ днл 8, 0686068152' , 18033, 0, 1        -- id client
-
-
--- exec CB_DetectService 'сяксцх днярсою й яерх хмрепмер;лсгшвйю юкейяюмдп пнлюмнбхв;ск.кебюдмюъ днл 8, 0686068152' , 18033, 0, 1        -- id client
--- exec CB_DetectService 'сяксцх днярсою й яерх хмрепмер;лсгшвйю юкейяюмдп пнлюмнбхв;ск.кебюдмюъ днл 8, 0686068152' , 0, 28821, 1		 -- id location	  
--- exec CB_DetectService 'сяксцх днярсою й яерх хмрепмер;лсгшвйю юкейяюмдп пнлюмнбхв;ск.кебюдмюъ днл 8, 0686068152 <018033>' , 0, 0, 1   -- login client in <>
-
-	--@naznp varchar(200),
-	--@client_id int,
-	--@location_id int,
-	--@on_login int
