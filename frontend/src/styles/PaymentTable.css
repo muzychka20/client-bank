@@ -15,7 +15,8 @@
 
 .status-process,
 .status-deleted,
-.status-success {
+.status-success,
+.status-analyzed {
     padding: 7px 10px;
     border-radius: 20px;
     text-align: center;
@@ -32,6 +33,10 @@
 
 .status-success {
     background-color: var(--success-color);
+}
+
+.status-analyzed {
+    background-color: var(--analyzed-color);
 }
 
 .table-loading {

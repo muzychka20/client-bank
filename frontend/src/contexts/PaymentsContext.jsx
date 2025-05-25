@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-// Создаем контекст
 const PaymentsContext = createContext();
 
 export function PaymentsContextProvider({ children }) {

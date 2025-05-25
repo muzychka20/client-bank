@@ -6,7 +6,6 @@ import api from "../api";
 import Message from "./Message";
 import DatePicker from "./DatePicker";
 import { checkWarnings, checkErrors, checkRecords } from "../helper";
-import Pagination from "./Pagination";
 import { useLocation } from "react-router-dom";
 
 function LoadPaymentsMenu({ loading, setLoading }) {
@@ -15,18 +14,16 @@ function LoadPaymentsMenu({ loading, setLoading }) {
   const reload = params.get("reload");
 
   const [activeIndex, setActiveIndex] = useState(0);
-
+  
   const [date, setDate] = useState(() => {
     const savedDate = localStorage.getItem("selectedDate");
     return savedDate ? new Date(savedDate) : new Date();
   });
 
-  const { addPayments, removePayments, payments } = usePayments();
+  const { addPayments, removePayments } = usePayments();
   const { addMessage } = useMessages();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
-  async function getHistory(index, page = 1) {
+  async function getHistory(index) {
     try {
       setLoading(true);
       removePayments();
@@ -38,10 +35,8 @@ function LoadPaymentsMenu({ loading, setLoading }) {
         "-" +
         String(date.getDate()).padStart(2, "0");
       const res = await api.get("/api/payments/history/", {
-        params: { date: formattedDate, page: page },
-      });
-      setTotalPages(res.data.total_pages);
-      setCurrentPage(page);
+        params: { date: formattedDate },
+      });    
       checkRecords(res, addMessage, addPayments, "history");
       checkWarnings(res, addMessage);
     } catch (error) {
@@ -51,16 +46,12 @@ function LoadPaymentsMenu({ loading, setLoading }) {
     }
   }
 
-  async function getLoadedData(index, page = 1) {
+  async function getLoadedData(index) {
     try {
       setLoading(true);
       removePayments();
       setActiveIndex(index);
-      const res = await api.get("/api/payments/loaded/", {
-        params: { page: page },
-      });
-      setTotalPages(res.data.total_pages);
-      setCurrentPage(page);
+      const res = await api.get("/api/payments/loaded/");      
       checkRecords(res, addMessage, addPayments, "loaded");
       checkWarnings(res, addMessage);
     } catch (error) {
@@ -79,7 +70,7 @@ function LoadPaymentsMenu({ loading, setLoading }) {
     }
   }, []);
 
-  async function clearPayments(index) {
+  async function clearPayments() {
     try {
       removePayments();
       const res = await api.post("/api/payments/clear/");
@@ -133,20 +124,6 @@ function LoadPaymentsMenu({ loading, setLoading }) {
           </a>
         ))}
       </div>
-
-      {payments.length > 0 && activeIndex != null && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => {
-            if (activeIndex === 1) {
-              getHistory(activeIndex, page);
-            } else if (activeIndex === 2) {
-              getLoadedData(activeIndex, page);
-            }
-          }}
-        />
-      )}
     </div>
   );
 }

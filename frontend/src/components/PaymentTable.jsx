@@ -46,6 +46,7 @@ export default function PaymentTable({ loading, setLoading }) {
     1: "status-process",
     3: "status-deleted",
     5: "status-success",
+    6: "status-analyzed",
   };
 
   const titles = [

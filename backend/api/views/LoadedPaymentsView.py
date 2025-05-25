@@ -88,20 +88,11 @@ class LoadedPaymentsView(APIView):
                 total_sum += record.Summa
 
             if records:
-                # Implement pagination
-                page_size = 10
-                page = int(request.GET.get("page", 1))
-                start_index = (page - 1) * page_size
-                end_index = page * page_size
-                paginated_records = records[start_index:end_index]
-
                 return Response(
                     {
-                        'records': paginated_records,
-                        'count_record': len(records),
-                        'sum_record': total_sum,
-                        'total_pages': (len(records) // page_size) + (1 if len(records) % page_size > 0 else 0),
-                        'current_page': page
+                        'records': records,
+                        'total_count': len(records),
+                        'total_sum': total_sum
                     },
                     status=status.HTTP_200_OK
                 )

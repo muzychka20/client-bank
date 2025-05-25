@@ -31,8 +31,8 @@ export const checkRecords = (res, addMessage, addPayments, source) => {
     if (source !== "dropzone") {
       addPayments(
         res.data.records,
-        res.data.count_record,
-        res.data.sum_record,
+        res.data.total_count,
+        res.data.total_sum,
         source
       );
     }
