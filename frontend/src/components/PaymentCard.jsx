@@ -400,7 +400,7 @@ function PaymentCard() {
               className="form-button-payment-card form-button-payment-card-save"
               onClick={handleSave}
             >
-              Save
+              Commit
             </button>
           )}
         </div>

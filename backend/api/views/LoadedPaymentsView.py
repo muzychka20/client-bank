@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from api.helper.helper import send_error, send_warning
 from ..models import wtKlientBankTemp, refKlientBankStatus
+from django.db import connections
 
 
 class LoadedPaymentsView(APIView):
@@ -11,10 +12,9 @@ class LoadedPaymentsView(APIView):
 
     def get(self, request, id=None):
         try:            
-            status_obj = refKlientBankStatus.objects.using('Bill').filter(id=1).first()
-            
             if id is not None:
                 record = wtKlientBankTemp.objects.filter(id=id).first()
+                status_obj = refKlientBankStatus.objects.using('Bill').filter(id=record.status).first()
 
                 if not record:
                     return send_warning(f"No loaded payment found with ID {id}", "Warning!")
@@ -36,6 +36,28 @@ class LoadedPaymentsView(APIView):
                         "room_id": None
                     }
                 }
+                
+                if record.service_id:
+                    with connections['Bill'].cursor() as cursor:
+                        cursor.execute("exec CB_GetAddressByService %s", [record.service_id])
+                        row = cursor.fetchone()
+                    if not row:
+                        return send_warning(f"No service found with ID {id}", "Warning!")
+
+                    client_payment_info = {
+                            'room': row[0],
+                            'room_id': row[1],
+                            'house': row[2],
+                            'house_id': row[3], 
+                            'street': row[4],
+                            'street_id': row[5],
+                            'city': row[6],
+                            'city_id': row[7],
+                            'client_name': row[8],
+                            'client_name_id': row[9],
+                    }
+
+                    loaded_payment['client_payment_info'] = client_payment_info
 
                 return Response(loaded_payment, status=status.HTTP_200_OK)
 
@@ -45,6 +67,7 @@ class LoadedPaymentsView(APIView):
             items = wtKlientBankTemp.objects.all()
 
             for record in items:
+                status_obj = refKlientBankStatus.objects.using('Bill').filter(id=record.status).first()
                 records.append({
                     "id": record.id,
                     "date": record.Date,

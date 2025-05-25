@@ -4,6 +4,7 @@ import PaymentTable from "../components/PaymentTable";
 import LoadPaymentsMenu from "../components/LoadPaymentsMenu";
 import "../styles/Home.css";
 import { useState } from "react";
+import AnalyzeButtons from "../components/AnalyzeButtons";
 
 function Home() {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,10 @@ function Home() {
       <Header />
       <div className="home-management">
         <Dropzone />
-        <LoadPaymentsMenu loading={loading} setLoading={setLoading} />
+        <div className="home-management-buttons">
+          <LoadPaymentsMenu loading={loading} setLoading={setLoading} />
+          <AnalyzeButtons />
+        </div>
       </div>
       <PaymentTable loading={loading} setLoading={setLoading} />
     </>

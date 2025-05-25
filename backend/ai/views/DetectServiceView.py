@@ -29,7 +29,7 @@ class DetectServiceView(APIView):
             if service_id:
                 record.service_id = service_id
                 record.service_old = service_id
-                record.status = 5
+                record.status = 6
                 record.save()
             return {
                 "id": record.id,
